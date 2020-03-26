@@ -8,9 +8,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'EasyQueue',
+      title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.teal,
+
+        primarySwatch: Colors.deepOrange,
       ),
       home: HomePage(),
     );
