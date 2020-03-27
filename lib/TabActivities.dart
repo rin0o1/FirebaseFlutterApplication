@@ -15,22 +15,23 @@ class TabActivities extends StatefulWidget
 class TabActivitiesState extends State<TabActivities>
 {
 
-
-
+  DatabaseReference db = FirebaseDatabase.instance.reference().child("Indirizzi");
   int Counter=0;
 
+
+
   sendData(){
-    DatabaseReference db = FirebaseDatabase.instance.reference().child("rino-3fbc0");
+
+    db = FirebaseDatabase.instance.reference().child("Indirizzi");
     db.once().then((DataSnapshot snapshot){
       Map<dynamic, dynamic> values = snapshot.value;
       values.forEach((key,values) {
-        print(values["via"]);
+        print(values["ee"]);
       });
     });
 
-
-
   }
+
   @override
   Widget build(BuildContext context) {
 
@@ -41,9 +42,6 @@ class TabActivitiesState extends State<TabActivities>
       child: new Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text(
-            '$Counter'
-          ),
        ],
       ),
      ),

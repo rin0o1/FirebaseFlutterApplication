@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "256133822905",
+    "firebase_url": "https://rino-3fbc0.firebaseio.com",
+    "project_id": "rino-3fbc0",
+    "storage_bucket": "rino-3fbc0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:256133822905:android:8f37f9de5882fc39325e68",
+        "android_client_info": {
+          "package_name": "easyqueue.easyqueue"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "256133822905-bll5c97oc6ekedr5tkf9iloofl73gert.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALtxR_zOF8m3tljHOof3dVhw6tiV2jYr4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "256133822905-bll5c97oc6ekedr5tkf9iloofl73gert.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
