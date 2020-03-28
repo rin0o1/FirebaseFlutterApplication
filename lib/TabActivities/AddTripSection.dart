@@ -18,20 +18,39 @@ class AddTripSectionState extends State<AddTripSection>
     return  new Center(
       child: new Row(
         mainAxisAlignment: MainAxisAlignment.center,
-       crossAxisAlignment: CrossAxisAlignment.start,
-       children: <Widget>[
-      new Container(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+        new Container(
           height: 400,
           width: 400,
-          color: Colors.white30,
-          child: new Column(
-            mainAxisAlignment: MainAxisAlignment.end ,
+          color: Colors.blueGrey,
+          child: new Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
-              RaisedButton(
+              new FlatButton.icon(
+                icon: Icon(Icons.save),
+                label: Text('Salva'),
+                color: Colors.amber,
+                textColor: Colors.black,
+                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(7),
+                ),
+                onPressed: () {},
+              ),
+              new FlatButton.icon(
+                icon: Icon(Icons.close),
+                label: Text('Cancel'),
+                color: Colors.redAccent,
+                textColor: Colors.black,
+                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(7),
+                ),
+                onPressed: () { },
+              ),
 
-                child: Text('Ciao'),
-              )
             ],
           ),
       )

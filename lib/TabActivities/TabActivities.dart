@@ -25,6 +25,7 @@ class TabActivitiesState extends State<TabActivities>
   void hideWidget(){
     setState(() {
       viewVisible = false ;
+
     });
   }
 
