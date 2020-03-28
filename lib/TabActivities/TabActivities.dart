@@ -14,20 +14,7 @@ class TabActivities extends StatefulWidget
 
 class TabActivitiesState extends State<TabActivities>
 {
-  bool viewVisible = false ;
-
-  void showWidget(){
-    setState(() {
-      viewVisible = true ;
-    });
-  }
-
-  void hideWidget(){
-    setState(() {
-      viewVisible = false ;
-
-    });
-  }
+    AddTripSection TripSection= new AddTripSection();
 
   @override
   Widget build(BuildContext context) {
@@ -39,21 +26,12 @@ class TabActivitiesState extends State<TabActivities>
       child: new Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Visibility(
-
-              maintainSize: true,
-              maintainAnimation: true,
-              maintainState: true,
-              visible: viewVisible,
-              child: AddTripSection(
-
-              )
-          ),
-        ],
-              ),
-     ),
+            TripSection
+                ],
+            ),
+                   ),
           floatingActionButton: new FloatingActionButton(
-            onPressed:showWidget,
+            onPressed:TripSection.show,
             elevation: 50,
             hoverElevation: 50,
             splashColor: Colors.amberAccent,
