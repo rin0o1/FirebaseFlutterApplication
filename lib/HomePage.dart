@@ -17,7 +17,7 @@ class HomePageState extends State<HomePage>
     return MaterialApp(
       title: 'Corona Virus Tracker',
       theme: ThemeData(
-        primarySwatch: Colors.deepOrange,
+        primarySwatch: Colors.amber,
       ),
       home: DefaultTabController(
         length: 1,

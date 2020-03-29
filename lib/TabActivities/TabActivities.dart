@@ -31,10 +31,11 @@ class TabActivitiesState extends State<TabActivities>
             ),
                    ),
           floatingActionButton: new FloatingActionButton(
-            onPressed:TripSection.show,
+            onPressed:TripSection.ShowSection,
+            backgroundColor: Colors.orange,
             elevation: 50,
             hoverElevation: 50,
-            splashColor: Colors.amberAccent,
+            splashColor: Colors.blue,
             tooltip: 'Increment',
             child: new Icon(Icons.add),
 
