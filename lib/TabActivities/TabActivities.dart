@@ -14,7 +14,7 @@ class TabActivities extends StatefulWidget
 
 class TabActivitiesState extends State<TabActivities>
 {
-    AddTripSection TripSection= new AddTripSection();
+  AddTripSection TripSection= new AddTripSection();
 
   @override
   Widget build(BuildContext context) {
@@ -23,25 +23,25 @@ class TabActivitiesState extends State<TabActivities>
       //backgroundColor: Colors.blue,
       body: new SafeArea(
 
-      child: new Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
+        child: new Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
             TripSection
-                ],
-            ),
-                   ),
-          floatingActionButton: new FloatingActionButton(
-            onPressed:TripSection.ShowSection,
-            backgroundColor: Colors.orange,
-            elevation: 50,
-            hoverElevation: 50,
-            splashColor: Colors.blue,
-            tooltip: 'Increment',
-            child: new Icon(Icons.add),
+          ],
+        ),
+      ),
+      floatingActionButton: new FloatingActionButton(
+        onPressed:TripSection.ShowSection,
+        backgroundColor: Colors.orange,
+        elevation: 50,
+        hoverElevation: 50,
+        splashColor: Colors.blue,
+        tooltip: 'Increment',
+        child: new Icon(Icons.add),
 
-    ),
+      ),
     );
 
-    }
+  }
 }
 
