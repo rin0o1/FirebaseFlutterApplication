@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+import 'GoogleMaps.dart';
 
 class TabActivities extends StatefulWidget
 {
@@ -14,7 +17,7 @@ class TabActivities extends StatefulWidget
 
 class TabActivitiesState extends State<TabActivities>
 {
-  AddTripSection TripSection= new AddTripSection();
+    AddTripSection TripSection= new AddTripSection();
 
   @override
   Widget build(BuildContext context) {
@@ -22,26 +25,28 @@ class TabActivitiesState extends State<TabActivities>
     return Scaffold(
       //backgroundColor: Colors.blue,
       body: new SafeArea(
-//g
-        child: new Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            TripSection
-          ],
-        ),
-      ),
-      floatingActionButton: new FloatingActionButton(
-        onPressed:TripSection.ShowSection,
-        backgroundColor: Colors.orange,
-        elevation: 50,
-        hoverElevation: 50,
-        splashColor: Colors.blue,
-        tooltip: 'Increment',
-        child: new Icon(Icons.add),
 
-      ),
+      child: new Column(
+
+        children: <Widget>[
+
+            TripSection
+            //TripSection
+                ],
+            ),
+                   ),
+          floatingActionButton: new FloatingActionButton(
+            onPressed:TripSection.ShowSection,
+            backgroundColor: Colors.orange,
+            elevation: 50,
+            hoverElevation: 50,
+            splashColor: Colors.blue,
+            tooltip: 'Increment',
+            child: new Icon(Icons.add),
+
+    ),
     );
 
-  }
+    }
 }
 
