@@ -23,7 +23,10 @@ class AddTripSectionState extends State<AddTripSection>
 
   final _formKey = GlobalKey<FormState>();
   bool viewVisible = false ;
+
+
   void HideSection(){setState((){viewVisible=false;});}
+
 
   @override
   Widget build(BuildContext context)
@@ -44,14 +47,65 @@ class AddTripSectionState extends State<AddTripSection>
             children: <Widget>[
               Column(
                 children: <Widget>[
-                  TextFormField(
-
+                  Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      hintText: "Inserisci",
+                      contentPadding: EdgeInsets.all(15.0),
+                      border: InputBorder.none,
+                      filled: true,
+                      fillColor: Colors.grey[200],
+                    ),
                   ),
-                  TextFormField(
-
                   ),
-                  TextFormField(
-
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        hintText: "Inserisci",
+                        contentPadding: EdgeInsets.all(15.0),
+                        border: InputBorder.none,
+                        filled: true,
+                        fillColor: Colors.grey[200],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        hintText: "Inserisci",
+                        contentPadding: EdgeInsets.all(15.0),
+                        border: InputBorder.none,
+                        filled: true,
+                        fillColor: Colors.grey[200],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        hintText: "Inserisci",
+                        contentPadding: EdgeInsets.all(15.0),
+                        border: InputBorder.none,
+                        filled: true,
+                        fillColor: Colors.grey[200],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        hintText: "Inserisci",
+                        contentPadding: EdgeInsets.all(15.0),
+                        border: InputBorder.none,
+                        filled: true,
+                        fillColor: Colors.grey[200],
+                      ),
+                    ),
                   ),
                 ],
               ),
