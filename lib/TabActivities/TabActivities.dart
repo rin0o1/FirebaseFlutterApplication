@@ -5,6 +5,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 
+
+
 class TabActivities extends StatefulWidget
 {
   TabActivities({Key key}) :super (key : key);
@@ -14,31 +16,34 @@ class TabActivities extends StatefulWidget
 
 class TabActivitiesState extends State<TabActivities>
 {
-  AddTripSection TripSection= new AddTripSection();
-
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
       //backgroundColor: Colors.blue,
       body: new SafeArea(
-//g
-        child: new Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: ListView(
           children: <Widget>[
-            TripSection
+            Padding(
+              padding: EdgeInsets.all(8.0),
+              child: TextFormField(
+                onChanged: (text) {
+
+                //Show these result
+                },
+                decoration: InputDecoration(
+                  icon: Icon(Icons.place),
+                  hintText: "Inserisci",
+                  contentPadding: EdgeInsets.all(15.0),
+                  border: InputBorder.none,
+                  filled: true,
+
+                ),
+              ),
+            ),
+
           ],
         ),
-      ),
-      floatingActionButton: new FloatingActionButton(
-        onPressed:TripSection.ShowSection,
-        backgroundColor: Colors.orange,
-        elevation: 50,
-        hoverElevation: 50,
-        splashColor: Colors.blue,
-        tooltip: 'Increment',
-        child: new Icon(Icons.add),
-
       ),
     );
 
