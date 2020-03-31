@@ -14,9 +14,8 @@ class AddTripSection extends StatefulWidget
 
   @override
   AddTripSectionState createState()=> TripSectionState;
+
 }
-
-
 
 class AddTripSectionState extends State<AddTripSection> {
   final _formKey = GlobalKey<FormState>();

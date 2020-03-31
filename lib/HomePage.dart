@@ -1,5 +1,6 @@
 
 import 'TabActivities/TabActivities.dart';
+import 'TabChart/TabChart.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer';
 import 'TabActivities/TabActivities.dart';
@@ -15,12 +16,12 @@ class HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Corona Virus Tracker',
+      title:"App su App",
       theme: ThemeData(
         primarySwatch: Colors.amber,
       ),
       home: DefaultTabController(
-        length: 1,
+        length: 2,
         child: Scaffold(
           appBar: AppBar(
             title: Text('App'),
@@ -28,16 +29,10 @@ class HomePageState extends State<HomePage>
               tabs: <Widget>[
                 Tab(
                   text: "Attività",
-                )
-              /*  Tab(
-                  text: "Mappe",
                 ),
                 Tab(
                   text: "Statistiche",
-                ),
-                Tab(
-                  text: "About",
-                ),*/
+                )
               ],
             ),
           ),
@@ -46,7 +41,8 @@ class HomePageState extends State<HomePage>
           TabBarView(
             physics: NeverScrollableScrollPhysics(),
             children: <Widget>[
-              TabActivities()
+              TabActivities(),
+              TabChart()
               /*
                BaseGoogleMap().getWidget(),
                AdvicesPage(),
