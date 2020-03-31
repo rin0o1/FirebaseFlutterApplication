@@ -92,7 +92,7 @@ class AddTripSectionState extends State<AddTripSection> {
       maintainSize: true,
       maintainAnimation: true,
       maintainState: true,
-      visible: true,
+      visible: viewVisible,
       child: new Container(
         padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
         margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
