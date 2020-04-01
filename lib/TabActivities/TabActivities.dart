@@ -18,7 +18,6 @@ class TabActivitiesState extends State<TabActivities>
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       //backgroundColor: Colors.blue,
       body: new SafeArea(
@@ -42,6 +41,9 @@ class TabActivitiesState extends State<TabActivities>
       ),
     );
 
+
   }
 }
+
+
 
