@@ -3,7 +3,8 @@ import 'package:easyqueue/TabActivities/DialogActivities.dart';
 import 'package:flutter/material.dart';
 import 'package:easyqueue/Utilities/DataManager.dart';
 import 'package:flutter/cupertino.dart';
-
+import 'package:easyqueue/Model/mSingleShift.dart';
+import 'package:easyqueue/Model/mShiftSettings.dart';
 class TabActivities extends StatefulWidget
 {
   TabActivities({Key key}) :super (key : key);
@@ -16,7 +17,7 @@ class TabActivitiesState extends State<TabActivities>
   DataManager m= new DataManager();
 
   onClick(){
-    m.settingUpSharedPreferences();
+
   }
 
   @override
