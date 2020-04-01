@@ -18,6 +18,15 @@ class TabActivitiesState extends State<TabActivities>
 
   onClick(){
 
+    SingleShift s= new SingleShift(DateTime.now());
+    print(s.Key);
+    m.saveModel(s);
+
+    m.readMonthlyShiftFromDate();
+
+    m.removeModelFromKey(s.Key);
+
+
   }
 
   @override

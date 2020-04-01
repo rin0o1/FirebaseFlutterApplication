@@ -25,12 +25,14 @@ class ShiftSettings extends BaseModel
 
   //Costruct this class from Json
   ShiftSettings.ShiftSettingsFromJson ( Map<String, dynamic> json )
-          : DurationInHours= json['DurationInHours'],
+          :
+            DurationInHours= json['DurationInHours'],
             PaymentForHour = json['PaymentForHour'] ;
 
   //Save proprieties in Json
   @override
   Map<String, dynamic> getClassInJson() => {
+
     'DurationInHours': DurationInHours,
     'PaymentForHour': PaymentForHour
   };

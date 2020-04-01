@@ -29,11 +29,45 @@ class DataManager
   }
 
 
+  //Get shift Settings information
+  //return a ShiftSetting object async
   Future<ShiftSettings> readShiftSettingsFromKey() async{
     String key="ShiftSettings";
     SharedPreferences sp= await SharedPreferences.getInstance();
     Object JsonDecode= json.decode(sp.getString(key));
     return ShiftSettings.ShiftSettingsFromJson(JsonDecode);
+  }
+
+    //if month is null means that is required current month
+   Future<List<SingleShift>> readMonthlyShiftFromDate( [String Date]) async{
+
+
+    String Month= Date ?? DateTime.now().month.toString();
+    String Year = Date ?? DateTime.now().year.toString();
+
+
+    SharedPreferences sp= await SharedPreferences.getInstance();
+
+    List<SingleShift> Shifts=new List<SingleShift>();
+
+    for(int i=0; i<31; i++)
+    {
+      String _day= i.toString();
+      String _month= Month;
+      String _year= Year;
+      String Key= _day + "-" + _month+ "-"+ _year;
+
+      String SingleShift_= sp.getString(Key);
+
+      if (SingleShift_==null) {break;}
+
+      Object Jsondecode= json.decode(SingleShift_);
+      SingleShift s= SingleShift.SingleShiftFromJson(Jsondecode);
+      s.setKeyFromJson();
+      Shifts.add(s);
+
+    }
+    return Shifts;
 
   }
 

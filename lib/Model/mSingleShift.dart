@@ -1,4 +1,3 @@
-
 import 'dart:ui';
 
 import 'package:easyqueue/Model/mBaseModel.dart';
@@ -10,13 +9,11 @@ class SingleShift extends BaseModel
   String AdditionalPaymentForHour;
   String Notes;
 
-  SingleShift ([DateTime Date, String AdditionDurationInHours,
-               String AdditionPaymentForHour, String Notes])
+  SingleShift (DateTime Date, [String AdditionDurationInHours,
+    String AdditionPaymentForHour, String Notes])
   {
-    this.Date=Date ;
-
-    setKey();
-
+    this.Date=Date;
+    buildKey();
     this.AdditionalDurationInHours=AdditionDurationInHours;
     this.AdditionalPaymentForHour=AdditionPaymentForHour;
   }
@@ -24,29 +21,37 @@ class SingleShift extends BaseModel
 
   @override
   Map<String, dynamic> getClassInJson() => {
+    'Key' :Key,
     'Date': Date,
     'AdditionalDurationInHours': AdditionalDurationInHours,
     'AdditionalPaymentForHour': AdditionalPaymentForHour,
-     'Notes': Notes
+    'Notes': Notes
   };
 
 
 
-  SingleShift.setClassFromJson ( Map<String, dynamic> json )
+  SingleShift.SingleShiftFromJson ( Map<String, dynamic> json )
       :
         Date= json['Date'],
         AdditionalDurationInHours=json['AdditionalDurationInHours'],
         AdditionalPaymentForHour = json['AdditionalPaymentForHour'],
         Notes= json['Notes']    ;
 
-
-  setKey()
+  setKeyFromJson()
   {
     Key=Date.toString();
   }
 
+  buildKey()
+  {
+    String Month= Date.month.toString();
+    String Day=Date.day.toString();
+    String Year= Date.year.toString();
+    Key= Day +"-"+ Month + "-" + Year;
+  }
+
   setDate(DateTime dateTime) {
-      this.Date=dateTime;
+    this.Date=dateTime;
   }
   setAdditionalDurationInHours(String additionaldurationinhours){
     this.AdditionalDurationInHours=additionaldurationinhours;
