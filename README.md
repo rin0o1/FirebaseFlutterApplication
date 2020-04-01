@@ -1,6 +1,5 @@
-# easyqueue
 
-Easy queue
+
 
 ## Getting Started
 
