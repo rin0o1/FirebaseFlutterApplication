@@ -50,7 +50,7 @@ class DataManager
 
     List<SingleShift> Shifts=new List<SingleShift>();
 
-    for(int i=0; i<31; i++)
+    for(int i=1; i<31; i++)
     {
       String _day= i.toString();
       String _month= Month;
@@ -59,15 +59,18 @@ class DataManager
 
       String SingleShift_= sp.getString(Key);
 
-      if (SingleShift_==null) {break;}
+      if (SingleShift_!=null) {
+        Object Jsondecode= json.decode(SingleShift_);
+        SingleShift s= SingleShift.SingleShiftFromJson(Jsondecode);
+        s.setKeyFromJson();
+        Shifts.add(s);
+        return Shifts;
+      }
 
-      Object Jsondecode= json.decode(SingleShift_);
-      SingleShift s= SingleShift.SingleShiftFromJson(Jsondecode);
-      s.setKeyFromJson();
-      Shifts.add(s);
+
 
     }
-    return Shifts;
+    return null;
 
   }
 
