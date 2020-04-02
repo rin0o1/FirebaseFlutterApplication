@@ -19,12 +19,10 @@ class TabActivitiesState extends State<TabActivities>
   List<SingleShift> ShiftsOfAMonth=null;
 
   CreateAndSaveNewShiftFromDate(DateTime time) async{
-
     SingleShift s= new SingleShift(time);
     await m.saveModel(s);
 
   }
-
 
 
   @override
