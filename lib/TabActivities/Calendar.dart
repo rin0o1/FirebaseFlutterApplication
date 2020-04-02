@@ -1,4 +1,7 @@
 
+
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 
@@ -10,8 +13,10 @@ class Calendar extends StatefulWidget {
 }
 
 class CalendarState extends State<Calendar> {
+
   DateTime _dateTime;
   int _beginMonthPadding=0;
+
 
   CalendarState() {
     _dateTime = DateTime.now();
@@ -78,11 +83,12 @@ class CalendarState extends State<Calendar> {
     /*24 is for notification bar on Android*/
     /*28 is for weekday labels of the row*/
     // 55 is for iPhoneX clipping issue.
-    final double itemHeight = (size.height - kToolbarHeight-kBottomNavigationBarHeight-24-28-55) / 6;
+    final double itemHeight = (size.height - kToolbarHeight-kBottomNavigationBarHeight-24-28-55) / 7;
     final double itemWidth = size.width / numWeekDays;
 
     return new Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors
+            .white70,
         appBar: new AppBar(
           title: new FittedBox(
               fit: BoxFit.contain,
@@ -117,16 +123,15 @@ class CalendarState extends State<Calendar> {
         ),
         body:
         new FutureBuilder(
-
             builder: (BuildContext context, AsyncSnapshot snapshot) {
-              switch (snapshot.connectionState) {
-                default:
-                  return new Column(
+                  return new Padding(
+                   padding: EdgeInsets.fromLTRB(2, 30, 2, 0),
+                  child:Column(
                     children: <Widget>[
                       new Row(
                         children: <Widget>[
                           new Expanded(
-                              child: new Text('S',
+                              child: new Text('L',
                                   textAlign: TextAlign.center,
                                   style: Theme
                                       .of(context)
@@ -140,28 +145,21 @@ class CalendarState extends State<Calendar> {
                                       .textTheme
                                       .headline)),
                           new Expanded(
-                              child: new Text('T',
+                              child: new Text('M',
                                   textAlign: TextAlign.center,
                                   style: Theme
                                       .of(context)
                                       .textTheme
                                       .headline)),
                           new Expanded(
-                              child: new Text('W',
+                              child: new Text('G',
                                   textAlign: TextAlign.center,
                                   style: Theme
                                       .of(context)
                                       .textTheme
                                       .headline)),
                           new Expanded(
-                              child: new Text('T',
-                                  textAlign: TextAlign.center,
-                                  style: Theme
-                                      .of(context)
-                                      .textTheme
-                                      .headline)),
-                          new Expanded(
-                              child: new Text('F',
+                              child: new Text('V',
                                   textAlign: TextAlign.center,
                                   style: Theme
                                       .of(context)
@@ -169,6 +167,13 @@ class CalendarState extends State<Calendar> {
                                       .headline)),
                           new Expanded(
                               child: new Text('S',
+                                  textAlign: TextAlign.center,
+                                  style: Theme
+                                      .of(context)
+                                      .textTheme
+                                      .headline)),
+                          new Expanded(
+                              child: new Text('D',
                                   textAlign: TextAlign.center,
                                   style: Theme
                                       .of(context)
@@ -188,64 +193,44 @@ class CalendarState extends State<Calendar> {
                               int dayNumber = index + 1;
                               return new GestureDetector(
                                 // Used for handling tap on each day view
-
-
                                   child: new Container(
-                                      margin: const EdgeInsets.all(2.0),
+                                      margin: const EdgeInsets.all(3.0),
                                       padding: const EdgeInsets.all(1.0),
                                       decoration: new BoxDecoration(
-                                          border: new Border.all(
-                                              color: Colors.grey)),
+                                              shape: BoxShape.circle ,
+                                              //Se è un giorno in cui ho lavorato è da inserire qui
+                                              color: Colors.orange),
                                       child: new Column(
                                         children: <Widget>[
                                           buildDayNumberWidget(dayNumber),
-                                          buildDayEventInfoWidget(dayNumber)
+                                          //buildDayEventInfoWidget(dayNumber)
                                         ],
                                       )));
                             }),
                       )
                     ],
+                  )
                   );
-                  break;
-
-              }
             }
         )
     );
   }
 
   Align buildDayNumberWidget(int dayNumber) {
-    //print('buildDayNumberWidget, dayNumber: $dayNumber');
-    if ((dayNumber-_beginMonthPadding) == DateTime.now().day
+    bool IsTheDay= (dayNumber-_beginMonthPadding+1) == DateTime.now().day
         && _dateTime.month == DateTime.now().month
-        && _dateTime.year == DateTime.now().year) {
-      // Add a circle around the current day
+        && _dateTime.year == DateTime.now().year;
+
       return Align(
-        alignment: Alignment.topLeft,
+        alignment: Alignment.bottomCenter,
         child: Container(
           width: 35.0, // Should probably calculate these values
-          height: 35.0,
-          padding: EdgeInsets.all(5.0),
+          height: 43.0,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: Colors.orange,
-            border: Border.all(),
+            color: (IsTheDay)  ?  Colors.amberAccent : null
           ),
-          child: new Text(
-            (dayNumber - _beginMonthPadding).toString(),
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.title,
-          ),
-        ),
-      );
-    } else {
-      // No circle around the current day
-      return Align(
-        alignment: Alignment.topLeft,
-        child: Container(
-          width: 35.0, // Should probably calculate these values
-          height: 35.0,
-          padding: EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
+          padding: EdgeInsets.fromLTRB(0.0, 10, 0.0, 0.0),
           child: new Text(
             dayNumber <= _beginMonthPadding ? ' ' : (dayNumber - _beginMonthPadding).toString(),
             textAlign: TextAlign.center,
@@ -253,15 +238,11 @@ class CalendarState extends State<Calendar> {
           ),
         ),
       );
-    }
   }
 
   Widget buildDayEventInfoWidget(int dayNumber) {
     int eventCount = 0;
     DateTime eventDate;
-
-
-
     if (eventCount > 0) {
       return new Expanded(
         child:
