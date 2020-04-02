@@ -4,7 +4,7 @@ import 'package:easyqueue/Model/mBaseModel.dart';
 
 class SingleShift extends BaseModel
 {
-  DateTime Date;
+  String Date;
   String AdditionalDurationInHours;
   String AdditionalPaymentForHour;
   String Notes;
@@ -12,8 +12,7 @@ class SingleShift extends BaseModel
   SingleShift (DateTime Date, [String AdditionDurationInHours,
     String AdditionPaymentForHour, String Notes])
   {
-    this.Date=Date;
-    buildKey();
+    buildKey(Date);
     this.AdditionalDurationInHours=AdditionDurationInHours;
     this.AdditionalPaymentForHour=AdditionPaymentForHour;
   }
@@ -32,7 +31,7 @@ class SingleShift extends BaseModel
 
   SingleShift.SingleShiftFromJson ( Map<String, dynamic> json )
       :
-        Date= json['Date'],
+        Date= json['Date'] ,
         AdditionalDurationInHours=json['AdditionalDurationInHours'],
         AdditionalPaymentForHour = json['AdditionalPaymentForHour'],
         Notes= json['Notes']    ;
@@ -42,16 +41,18 @@ class SingleShift extends BaseModel
     Key=Date.toString();
   }
 
-  buildKey()
+  buildKey(DateTime date)
   {
-    String Month= Date.month.toString();
-    String Day=Date.day.toString();
-    String Year= Date.year.toString();
+    String Month= date.month.toString();
+    String Day=date.day.toString();
+    String Year= date.year.toString();
     Key= Day +"-"+ Month + "-" + Year;
+    Date= Key;
   }
 
   setDate(DateTime dateTime) {
-    this.Date=dateTime;
+    buildKey(dateTime);
+
   }
   setAdditionalDurationInHours(String additionaldurationinhours){
     this.AdditionalDurationInHours=additionaldurationinhours;

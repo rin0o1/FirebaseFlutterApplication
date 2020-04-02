@@ -15,17 +15,18 @@ class TabActivities extends StatefulWidget
 class TabActivitiesState extends State<TabActivities>
 {
   DataManager m= new DataManager();
+  List<SingleShift> s_=null;
 
-  onClick(){
+  onClick() async{
 
     SingleShift s= new SingleShift(DateTime.now());
     print(s.Key);
-    m.saveModel(s);
-
-    m.readMonthlyShiftFromDate();
-
-    m.removeModelFromKey(s.Key);
-
+    await m.saveModel(s);
+    m.readMonthlyShiftFromDate().then((List<SingleShift> result) {
+      s_=result;
+    } );
+   m.removeModelFromKey(s.Key);
+   print("Removing added element");
 
   }
 
