@@ -75,7 +75,8 @@ class DataManager
 
   }
 
-
+  //During the application initialization
+  getTotalInformation(){}
 
   //Write model
   saveModel(BaseModel model) async{
@@ -88,8 +89,7 @@ class DataManager
     sp.setString(model.Key, JsonEncode);
   }
 
-  removeModelFromKey(String Key) async
-  {
+  removeModelFromKey(String Key) async  {
     SharedPreferences sp= await SharedPreferences.getInstance();
     sp.remove(Key);
 

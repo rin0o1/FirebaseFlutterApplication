@@ -1,54 +1,15 @@
 
-//AdditionalInformation
-SharedPreferenceIsAlreadySetUp: false/true
+import 'package:flutter/material.dart';
 
 
-//Informazioni prese dalle impostazioni
-DefaultSettingShift:
-
--DurationInHours
--PaymentForHour
-
-
-
-SingleShift:
-//Informazioni prese al click sul giorno del calendario
--Id --> FullDate --> Sara la key
-//Informazioni prese al long click sul giorno del calendario
--DurationInHours --> nel caso in cui non sia uguale a quella di default
--PaymentForHour  --> nel caso in cui non sia uguale a quella di default
-
-
-
-void main() => runApp(MyApp());
-
-
-class MyApp extends StatelessWidget {
-
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'Events Calendar',
-      theme: new ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: HomePage(),
-
-    );
-  }
-
-}
-
-class HomePage extends StatefulWidget {
+class Calendar extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return CalendarState();
   }
 }
 
-class CalendarState extends State<HomePage> {
+class CalendarState extends State<Calendar> {
   DateTime _dateTime;
   int _beginMonthPadding=0;
 
@@ -400,5 +361,3 @@ class CalendarState extends State<HomePage> {
   }
 
 }
-
-
