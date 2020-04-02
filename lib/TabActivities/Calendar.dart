@@ -30,17 +30,15 @@ class CalendarState extends State<Calendar> {
   }
 
   void setMonthPadding() {
-    _beginMonthPadding = new DateTime(_dateTime.year, _dateTime.month, 1).weekday;
+    _beginMonthPadding = new DateTime(_dateTime.year, _dateTime.month, 0).weekday;
     _beginMonthPadding == 7 ? (_beginMonthPadding = 0) : _beginMonthPadding;
   }
-
 
 
   void _goToToday() {
     print("trying to go to the month of today");
     setState(() {
       _dateTime = DateTime.now();
-
       setMonthPadding();
     });
   }
@@ -69,8 +67,8 @@ class CalendarState extends State<Calendar> {
 
   /*void _onDayTapped(int day) {
     Navigator.push(context, new MaterialPageRoute(builder: (BuildContext context)
-    => new EventsView(new DateTime(_dateTime.year, _dateTime.month, day)))
-    );
+    => print("object");
+
   }*/
 
 
@@ -86,42 +84,8 @@ class CalendarState extends State<Calendar> {
     final double itemHeight = (size.height - kToolbarHeight-kBottomNavigationBarHeight-24-28-55) / 7;
     final double itemWidth = size.width / numWeekDays;
 
-    return new Scaffold(
-        backgroundColor: Colors
-            .white70,
-        appBar: new AppBar(
-          title: new FittedBox(
-              fit: BoxFit.contain,
-              child: new Text(
-                getMonthName(_dateTime.month) + " " + _dateTime.year.toString(),
-              )
-          ),
-          actions: <Widget>[
-            IconButton(
-                icon: Icon(
-                  Icons.today,
-                  color: Colors.white,
-                ),
-                onPressed: _goToToday
-            ),
-            IconButton(
-                icon: Icon(
-                  Icons.chevron_left,
-                  color: Colors.white,
-                ),
-                onPressed: _previousMonthSelected
-            ),
-            IconButton(
-                icon: Icon(
-                  Icons.chevron_right,
-                  color: Colors.white,
-                ),
-                onPressed: _nextMonthSelected
-            )
+    return
 
-          ],
-        ),
-        body:
         new FutureBuilder(
             builder: (BuildContext context, AsyncSnapshot snapshot) {
                   return new Padding(
@@ -190,14 +154,15 @@ class CalendarState extends State<Calendar> {
                         children: List.generate(
                             getNumberOfDaysInMonth(_dateTime.month),
                                 (index) {
-                              int dayNumber = index + 1;
+                              int dayNumber = index +2;
                               return new GestureDetector(
                                 // Used for handling tap on each day view
-                                  child: new Container(
+                                      child: new Container(
+
                                       margin: const EdgeInsets.all(3.0),
                                       padding: const EdgeInsets.all(1.0),
                                       decoration: new BoxDecoration(
-                                              shape: BoxShape.circle ,
+                                              shape: BoxShape.circle,
                                               //Se è un giorno in cui ho lavorato è da inserire qui
                                               color: Colors.orange),
                                       child: new Column(
@@ -212,12 +177,11 @@ class CalendarState extends State<Calendar> {
                   )
                   );
             }
-        )
     );
   }
 
   Align buildDayNumberWidget(int dayNumber) {
-    bool IsTheDay= (dayNumber-_beginMonthPadding+1) == DateTime.now().day
+    bool IsTheDay= (dayNumber-_beginMonthPadding) == DateTime.now().day
         && _dateTime.month == DateTime.now().month
         && _dateTime.year == DateTime.now().year;
 
@@ -228,7 +192,7 @@ class CalendarState extends State<Calendar> {
           height: 43.0,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: (IsTheDay)  ?  Colors.amberAccent : null
+            color: (IsTheDay)  ?  Colors.yellowAccent : null
           ),
           padding: EdgeInsets.fromLTRB(0.0, 10, 0.0, 0.0),
           child: new Text(
