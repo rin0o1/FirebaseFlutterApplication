@@ -5,6 +5,7 @@ import 'package:easyqueue/Utilities/DataManager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:easyqueue/Model/mSingleShift.dart';
 import 'package:easyqueue/Model/mShiftSettings.dart';
+
 class TabActivities extends StatefulWidget
 {
   TabActivities({Key key}) :super (key : key);
@@ -15,20 +16,16 @@ class TabActivities extends StatefulWidget
 class TabActivitiesState extends State<TabActivities>
 {
   DataManager m= new DataManager();
-  List<SingleShift> s_=null;
+  List<SingleShift> ShiftsOfAMonth=null;
 
-  onClick() async{
+  CreateAndSaveNewShiftFromDate(DateTime time) async{
 
-    SingleShift s= new SingleShift(DateTime.now());
-    print(s.Key);
+    SingleShift s= new SingleShift(time);
     await m.saveModel(s);
-    m.readMonthlyShiftFromDate().then((List<SingleShift> result) {
-      s_=result;
-    } );
-   m.removeModelFromKey(s.Key);
-   print("Removing added element");
 
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +41,7 @@ class TabActivitiesState extends State<TabActivities>
         ),
       ),
       floatingActionButton: new FloatingActionButton(
-        onPressed: onClick ,
+        onPressed:  ()  => {} ,
         backgroundColor: Colors.orange,
         elevation: 50,
         hoverElevation: 50,

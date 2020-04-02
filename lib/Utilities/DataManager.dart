@@ -7,7 +7,7 @@ import 'package:easyqueue/Model/mSingleShift.dart';
 
 class DataManager
 {
-  //Iniziallizando il file
+  //Inizializando il file al primo avvio
   settingUpSharedPreferences() async{
 
     String IsSetKey="SharedPreferenceIsAlreadySetUp";
@@ -41,7 +41,6 @@ class DataManager
     //if month is null means that is required current month
    Future<List<SingleShift>> readMonthlyShiftFromDate( [String Date]) async{
 
-
     String Month= Date ?? DateTime.now().month.toString();
     String Year = Date ?? DateTime.now().year.toString();
 
@@ -52,13 +51,17 @@ class DataManager
 
     for(int i=1; i<31; i++)
     {
+
+      //Finding shift from month
       String _day= i.toString();
       String _month= Month;
       String _year= Year;
       String Key= _day + "-" + _month+ "-"+ _year;
 
+      //Reading shift
       String SingleShift_= sp.getString(Key);
 
+      //There is a shift
       if (SingleShift_!=null) {
         Object Jsondecode= json.decode(SingleShift_);
         SingleShift s= SingleShift.SingleShiftFromJson(Jsondecode);
@@ -66,10 +69,8 @@ class DataManager
         Shifts.add(s);
         return Shifts;
       }
-
-
-
     }
+
     return null;
 
   }
@@ -78,9 +79,12 @@ class DataManager
 
   //Write model
   saveModel(BaseModel model) async{
+
     SharedPreferences sp= await SharedPreferences.getInstance();
+    //Getting model in Json
     String JsonEncode=json.encode(model.getClassInJson());
     print(JsonEncode);
+    //Saving model
     sp.setString(model.Key, JsonEncode);
   }
 
