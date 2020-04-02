@@ -11,7 +11,7 @@ class DataManager
   settingUpSharedPreferences() async{
 
     String IsSetKey="SharedPreferenceIsAlreadySetUp";
-
+ 
     SharedPreferences sp =  await SharedPreferences.getInstance();
     bool Value= sp.getBool('Value') ?? false;
 
