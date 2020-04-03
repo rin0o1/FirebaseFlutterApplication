@@ -29,7 +29,10 @@ class TabActivitiesState extends State<TabActivities>
   Widget build(BuildContext context) {
 
     // TODO: implement build
-    return Calendar();
+    return new Center(
+      child: Calendar(),
+    );
+
   }
 
 

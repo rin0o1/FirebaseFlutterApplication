@@ -1,6 +1,3 @@
-
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -8,180 +5,192 @@ import 'package:flutter/material.dart';
 class Calendar extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return CalendarState();
+    return scrollMonthLeft();
   }
 }
 
-class CalendarState extends State<Calendar> {
+class scrollMonthLeft extends State<Calendar> {
 
   DateTime _dateTime;
-  int _beginMonthPadding=0;
+  int MonthOffset=0;
+  int numWeekDays = 7;
 
-
-  CalendarState() {
+  scrollMonthLeft() {
     _dateTime = DateTime.now();
-    setMonthPadding();
+
+    setDaysOffset();
   }
-
-  @override
-  void initState() {
-    super.initState();
-
-  }
-
-  void setMonthPadding() {
-    _beginMonthPadding = new DateTime(_dateTime.year, _dateTime.month, 0).weekday;
-    _beginMonthPadding == 7 ? (_beginMonthPadding = 0) : _beginMonthPadding;
-  }
-
-
-  void _goToToday() {
-    print("trying to go to the month of today");
-    setState(() {
-      _dateTime = DateTime.now();
-      setMonthPadding();
-    });
-  }
-
-  void _previousMonthSelected() {
-    setState(() {
-      if (_dateTime.month == DateTime.january)
-        _dateTime = new DateTime(_dateTime.year - 1, DateTime.december);
-      else
-        _dateTime = new DateTime(_dateTime.year, _dateTime.month - 1);
-
-      setMonthPadding();
-    });
-  }
-
-  void _nextMonthSelected() {
-    setState(() {
-      if (_dateTime.month == DateTime.december)
-        _dateTime = new DateTime(_dateTime.year + 1, DateTime.january);
-      else
-        _dateTime = new DateTime(_dateTime.year, _dateTime.month + 1);
-
-      setMonthPadding();
-    });
-  }
-
-  /*void _onDayTapped(int day) {
-    Navigator.push(context, new MaterialPageRoute(builder: (BuildContext context)
-    => print("object");
-
-  }*/
-
-
 
   @override
   Widget build(BuildContext context) {
-    final int numWeekDays = 7;
+
+    return new Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Column(
+          children: <Widget>[
+            Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(20,5,0,0),
+                    child: new Text(
+                        getMonthName(_dateTime.month) + " " + _dateTime.year.toString(),
+                        style: Theme.of(context).textTheme.display1
+                    ),
+                  )
+                ]
+            ),
+            GetCalendar(context),
+          ],
+        ),
+        Column(
+          children: <Widget>[
+            Container(
+                margin: EdgeInsets.fromLTRB(15,10,15,6),
+                child: new Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    FloatingActionButton(
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(13.0))),
+                      backgroundColor: Colors.green,
+                      child: new Icon(Icons.chevron_left),
+                      onPressed: scrollMonthRight,
+                    ),
+                    FloatingActionButton(
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(13.0))),
+                      backgroundColor: Colors.deepOrange,
+                      child: new Icon(Icons.calendar_today),
+                      tooltip: "Torna ad oggi",
+                      onPressed: setToday,
+                    ),
+                    FloatingActionButton(
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(13.0))),
+                      backgroundColor: Colors.green,
+                      child: new Icon(Icons.chevron_right),
+                      onPressed: scrollMonthRight,
+                    ),
+                  ],
+                )
+            ),
+          ],
+        )
+      ],
+    );
+  }
+
+
+  FutureBuilder GetCalendar(BuildContext context)
+  {
+
     var size = MediaQuery.of(context).size;
 
     /*24 is for notification bar on Android*/
     /*28 is for weekday labels of the row*/
     // 55 is for iPhoneX clipping issue.
-    final double itemHeight = (size.height - kToolbarHeight-kBottomNavigationBarHeight-24-28-55) / 7;
+    final double itemHeight = (size.height - kToolbarHeight-kBottomNavigationBarHeight-24-28-55) / numWeekDays;
+    //final double itemHeight=54;
     final double itemWidth = size.width / numWeekDays;
 
     return
+      new FutureBuilder(
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            return new Padding(
+                padding: EdgeInsets.fromLTRB(2, 10, 2, 0),
+                child:Column(
+                  children: <Widget>[
+                    new Row(
+                      children: <Widget>[
+                        new Expanded(
+                            child: new Text('L',
+                                textAlign: TextAlign.center,
+                                style: Theme
+                                    .of(context)
+                                    .textTheme
+                                    .headline)),
+                        new Expanded(
+                            child: new Text('M',
+                                textAlign: TextAlign.center,
+                                style: Theme
+                                    .of(context)
+                                    .textTheme
+                                    .headline)),
+                        new Expanded(
+                            child: new Text('M',
+                                textAlign: TextAlign.center,
+                                style: Theme
+                                    .of(context)
+                                    .textTheme
+                                    .headline)),
+                        new Expanded(
+                            child: new Text('G',
+                                textAlign: TextAlign.center,
+                                style: Theme
+                                    .of(context)
+                                    .textTheme
+                                    .headline)),
+                        new Expanded(
+                            child: new Text('V',
+                                textAlign: TextAlign.center,
+                                style: Theme
+                                    .of(context)
+                                    .textTheme
+                                    .headline)),
+                        new Expanded(
+                            child: new Text('S',
+                                textAlign: TextAlign.center,
+                                style: Theme
+                                    .of(context)
+                                    .textTheme
+                                    .headline)),
+                        new Expanded(
+                            child: new Text('D',
+                                textAlign: TextAlign.center,
+                                style: Theme
+                                    .of(context)
+                                    .textTheme
+                                    .headline)),
+                      ],
+                      mainAxisSize: MainAxisSize.min,
+                    ),
+                    new GridView.count(
+                      scrollDirection: Axis.vertical,
+                      crossAxisCount: numWeekDays,
+                      childAspectRatio: (itemWidth / itemHeight),
+                      shrinkWrap: true,
+                      children: List.generate(
+                          getNumberOfDaysInMonth(_dateTime.month),
+                              (index) {
+                            int dayNumber = index +1;
+                            return new GestureDetector(
+                              // Used for handling tap on each day view
+                                child: new Container(
 
-        new FutureBuilder(
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  return new Padding(
-                   padding: EdgeInsets.fromLTRB(2, 30, 2, 0),
-                  child:Column(
-                    children: <Widget>[
-                      new Row(
-                        children: <Widget>[
-                          new Expanded(
-                              child: new Text('L',
-                                  textAlign: TextAlign.center,
-                                  style: Theme
-                                      .of(context)
-                                      .textTheme
-                                      .headline)),
-                          new Expanded(
-                              child: new Text('M',
-                                  textAlign: TextAlign.center,
-                                  style: Theme
-                                      .of(context)
-                                      .textTheme
-                                      .headline)),
-                          new Expanded(
-                              child: new Text('M',
-                                  textAlign: TextAlign.center,
-                                  style: Theme
-                                      .of(context)
-                                      .textTheme
-                                      .headline)),
-                          new Expanded(
-                              child: new Text('G',
-                                  textAlign: TextAlign.center,
-                                  style: Theme
-                                      .of(context)
-                                      .textTheme
-                                      .headline)),
-                          new Expanded(
-                              child: new Text('V',
-                                  textAlign: TextAlign.center,
-                                  style: Theme
-                                      .of(context)
-                                      .textTheme
-                                      .headline)),
-                          new Expanded(
-                              child: new Text('S',
-                                  textAlign: TextAlign.center,
-                                  style: Theme
-                                      .of(context)
-                                      .textTheme
-                                      .headline)),
-                          new Expanded(
-                              child: new Text('D',
-                                  textAlign: TextAlign.center,
-                                  style: Theme
-                                      .of(context)
-                                      .textTheme
-                                      .headline)),
-                        ],
-                        mainAxisSize: MainAxisSize.min,
-                      ),
-                      new GridView.count(
-                        crossAxisCount: numWeekDays,
-                        childAspectRatio: (itemWidth / itemHeight),
-                        shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
-                        children: List.generate(
-                            getNumberOfDaysInMonth(_dateTime.month),
-                                (index) {
-                              int dayNumber = index +2;
-                              return new GestureDetector(
-                                // Used for handling tap on each day view
-                                      child: new Container(
+                                    margin: const EdgeInsets.all(3.0),
+                                    padding: const EdgeInsets.all(1.0),
+                                    decoration: new BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        //Se è un giorno in cui ho lavorato è da inserire qui
+                                        color: Colors.orange),
+                                    child: new Column(
+                                      children: <Widget>[
+                                        buildDayNumberWidget(dayNumber),
+                                        //buildDayEventInfoWidget(dayNumber)
+                                      ],
+                                    )));
+                          }),
+                    )
+                  ],
+                )
+            );
+          }
+      );
 
-                                      margin: const EdgeInsets.all(3.0),
-                                      padding: const EdgeInsets.all(1.0),
-                                      decoration: new BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              //Se è un giorno in cui ho lavorato è da inserire qui
-                                              color: Colors.orange),
-                                      child: new Column(
-                                        children: <Widget>[
-                                          buildDayNumberWidget(dayNumber),
-                                          //buildDayEventInfoWidget(dayNumber)
-                                        ],
-                                      )));
-                            }),
-                      )
-                    ],
-                  )
-                  );
-            }
-    );
   }
 
+
   Align buildDayNumberWidget(int dayNumber) {
-    bool IsTheDay= (dayNumber-_beginMonthPadding) == DateTime.now().day
+    bool IsTheDay= (dayNumber-MonthOffset) == DateTime.now().day
         && _dateTime.month == DateTime.now().month
         && _dateTime.year == DateTime.now().year;
 
@@ -196,7 +205,7 @@ class CalendarState extends State<Calendar> {
           ),
           padding: EdgeInsets.fromLTRB(0.0, 10, 0.0, 0.0),
           child: new Text(
-            dayNumber <= _beginMonthPadding ? ' ' : (dayNumber - _beginMonthPadding).toString(),
+            dayNumber <= MonthOffset ? ' ' : (dayNumber - MonthOffset).toString(),
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.headline,
           ),
@@ -225,6 +234,46 @@ class CalendarState extends State<Calendar> {
       return new Container();
     }
   }
+
+  void setDaysOffset() {
+    MonthOffset = new DateTime(_dateTime.year, _dateTime.month, 0).weekday;
+    MonthOffset == 7 ? (MonthOffset = 0) : MonthOffset;
+  }
+
+
+  void setToday() {
+    setState(() {
+      _dateTime = DateTime.now();
+      setDaysOffset();
+    });
+  }
+
+  void scrolMonthLeft() {
+    setState(() {
+      if (_dateTime.month == DateTime.january)
+        _dateTime = new DateTime(_dateTime.year - 1, DateTime.december);
+      else
+        _dateTime = new DateTime(_dateTime.year, _dateTime.month - 1);
+
+      setDaysOffset();
+    });
+  }
+
+  void scrollMonthRight() {
+    setState(() {
+      if (_dateTime.month == DateTime.december)
+        _dateTime = new DateTime(_dateTime.year + 1, DateTime.january);
+      else
+        _dateTime = new DateTime(_dateTime.year, _dateTime.month + 1);
+
+      setDaysOffset();
+    });
+  }
+
+  /*void _onDayTapped(int day) {
+    Navigator.push(context, new MaterialPageRoute(builder: (BuildContext context)
+    => print("object");
+  }*/
 
   int getNumberOfDaysInMonth(final int month) {
     int numDays = 28;
@@ -270,7 +319,7 @@ class CalendarState extends State<Calendar> {
       default:
         numDays = 28;
     }
-    return numDays + _beginMonthPadding;
+    return numDays + MonthOffset;
   }
 
   String getMonthName(final int month) {
