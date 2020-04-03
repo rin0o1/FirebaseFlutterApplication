@@ -17,7 +17,6 @@ class TabChartState extends State<TabChart>
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       //backgroundColor: Colors.blue,
       body: new SafeArea(
