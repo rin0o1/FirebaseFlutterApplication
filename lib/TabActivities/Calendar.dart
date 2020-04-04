@@ -9,13 +9,20 @@ class Calendar extends StatefulWidget {
 }
 
 class CalendarState extends State<Calendar> {
+
   DateTime _dateTime;
   int MonthOffset = 0;
   int numWeekDays = 7;
+  int Day=1;
+
+  List<CellNumber> CellsNumber=null;
 
 
   CalendarState() {
+
     _dateTime = DateTime.now();
+
+    CellsNumber= new List<CellNumber>();
 
     setDaysOffset();
   }
@@ -50,15 +57,15 @@ class CalendarState extends State<Calendar> {
                     FloatingActionButton(
                       shape: RoundedRectangleBorder(
                           borderRadius:
-                              BorderRadius.all(Radius.circular(13.0))),
+                          BorderRadius.all(Radius.circular(13.0))),
                       backgroundColor: Colors.green,
                       child: new Icon(Icons.chevron_left),
-                      onPressed: scrollMonthRight,
+                      onPressed: scrolMonthLeft,
                     ),
                     FloatingActionButton(
                       shape: RoundedRectangleBorder(
                           borderRadius:
-                              BorderRadius.all(Radius.circular(13.0))),
+                          BorderRadius.all(Radius.circular(13.0))),
                       backgroundColor: Colors.deepOrange,
                       child: new Icon(Icons.calendar_today),
                       tooltip: "Torna ad oggi",
@@ -67,7 +74,7 @@ class CalendarState extends State<Calendar> {
                     FloatingActionButton(
                       shape: RoundedRectangleBorder(
                           borderRadius:
-                              BorderRadius.all(Radius.circular(13.0))),
+                          BorderRadius.all(Radius.circular(13.0))),
                       backgroundColor: Colors.green,
                       child: new Icon(Icons.chevron_right),
                       onPressed: scrollMonthRight,
@@ -87,98 +94,83 @@ class CalendarState extends State<Calendar> {
     /*28 is for weekday labels of the row*/
     // 55 is for iPhoneX clipping issue.
     final double itemHeight = (size.height -
-            kToolbarHeight -
-            kBottomNavigationBarHeight -
-            24 -
-            28 -
-            55) /
+        kToolbarHeight -
+        kBottomNavigationBarHeight -
+        24 -
+        28 -
+        55) /
         numWeekDays;
     //final double itemHeight=54;
     final double itemWidth = size.width / numWeekDays;
 
     return new FutureBuilder(
         builder: (BuildContext context, AsyncSnapshot snapshot) {
-      return new Padding(
-          padding: EdgeInsets.fromLTRB(2, 10, 2, 0),
-          child: Column(
-            children: <Widget>[
-              new Row(
+          return new Padding(
+              padding: EdgeInsets.fromLTRB(2, 10, 2, 0),
+              child: Column(
                 children: <Widget>[
-                  new Expanded(
-                      child: new Text('L',
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.headline)),
-                  new Expanded(
-                      child: new Text('M',
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.headline)),
-                  new Expanded(
-                      child: new Text('M',
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.headline)),
-                  new Expanded(
-                      child: new Text('G',
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.headline)),
-                  new Expanded(
-                      child: new Text('V',
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.headline)),
-                  new Expanded(
-                      child: new Text('S',
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.headline)),
-                  new Expanded(
-                      child: new Text('D',
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.headline)),
+                  new Row(
+                    children: <Widget>[
+                      new Expanded(
+                          child: new Text('L',
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.headline)),
+                      new Expanded(
+                          child: new Text('M',
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.headline)),
+                      new Expanded(
+                          child: new Text('M',
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.headline)),
+                      new Expanded(
+                          child: new Text('G',
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.headline)),
+                      new Expanded(
+                          child: new Text('V',
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.headline)),
+                      new Expanded(
+                          child: new Text('S',
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.headline)),
+                      new Expanded(
+                          child: new Text('D',
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.headline)),
+                    ],
+                    mainAxisSize: MainAxisSize.min,
+                  ),
+                  new GridView.count(
+                        crossAxisCount: numWeekDays,
+                        childAspectRatio: (itemWidth / itemHeight),
+                        shrinkWrap: true,
+                        children: new  List.generate(getNumberOfDaysInMonth(_dateTime.month),
+                                (index) {
+
+                            //-1 ---> that cell have to be without a number
+                             int Day= (index<MonthOffset) ? -1: (index -MonthOffset)+1;
+
+                              bool IsTheDay = Day !=-1 &&
+                                  Day == DateTime.now().day &&
+                                  _dateTime.month == DateTime.now().month &&
+                                  _dateTime.year == DateTime.now().year;
+
+                              return  new CellNumber(Day, index, IsTheDay);
+
+                            },
+                      ))
                 ],
-                mainAxisSize: MainAxisSize.min,
-              ),
-              new GestureDetector(
-                  child: new GridView.count(
-                scrollDirection: Axis.vertical,
-                crossAxisCount: numWeekDays,
-                childAspectRatio: (itemWidth / itemHeight),
-                shrinkWrap: true,
-                children: List.generate(getNumberOfDaysInMonth(_dateTime.month),
-                    (index) {
-                  Color ColorNumberContainer= Colors.orange;
-                  int GridViewIndex = index + 1;
-                  int Day = GridViewIndex - MonthOffset;
-                  return  new CellNumber(Day, MonthOffset,GridViewIndex,_dateTime);
-
-                }),
-              ))
-            ],
-          ));
-    });
+              ));
+        });
   }
 
 
-  Widget buildDayEventInfoWidget(int dayNumber) {
-    int eventCount = 0;
-    DateTime eventDate;
-    if (eventCount > 0) {
-      return new Expanded(
-        child: FittedBox(
-          alignment: Alignment.topLeft,
-          fit: BoxFit.contain,
-          child: new Text(
-            "Events:$eventCount",
-            maxLines: 1,
-            style: new TextStyle(
-                fontWeight: FontWeight.normal,
-                background: Paint()..color = Colors.amberAccent),
-          ),
-        ),
-      );
-    } else {
-      return new Container();
-    }
-  }
+
 
   void setDaysOffset() {
+
     MonthOffset = new DateTime(_dateTime.year, _dateTime.month, 0).weekday;
     MonthOffset == 7 ? (MonthOffset = 0) : MonthOffset;
   }
@@ -191,18 +183,23 @@ class CalendarState extends State<Calendar> {
   }
 
   void scrolMonthLeft() {
-    setState(() {
-      if (_dateTime.month == DateTime.january)
-        _dateTime = new DateTime(_dateTime.year - 1, DateTime.december);
-      else
-        _dateTime = new DateTime(_dateTime.year, _dateTime.month - 1);
+   setState(() {
 
-      setDaysOffset();
-    });
+
+        if (_dateTime.month == DateTime.january)
+          _dateTime = new DateTime(_dateTime.year - 1, DateTime.december);
+        else
+          _dateTime = new DateTime(_dateTime.year, _dateTime.month - 1);
+
+        setDaysOffset();
+      });
+
+
   }
 
   void scrollMonthRight() {
     setState(() {
+
       if (_dateTime.month == DateTime.december)
         _dateTime = new DateTime(_dateTime.year + 1, DateTime.january);
       else
@@ -290,6 +287,28 @@ class CalendarState extends State<Calendar> {
         return "December";
       default:
         return "Unknown";
+    }
+  }
+
+  Widget buildDayEventInfoWidget(int dayNumber) {
+    int eventCount = 0;
+    DateTime eventDate;
+    if (eventCount > 0) {
+      return new Expanded(
+        child: FittedBox(
+          alignment: Alignment.topLeft,
+          fit: BoxFit.contain,
+          child: new Text(
+            "Events:$eventCount",
+            maxLines: 1,
+            style: new TextStyle(
+                fontWeight: FontWeight.normal,
+                background: Paint()..color = Colors.amberAccent),
+          ),
+        ),
+      );
+    } else {
+      return new Container();
     }
   }
 }
