@@ -4,13 +4,14 @@ import 'package:flutter/material.dart';
 
 class CellNumber extends StatefulWidget{
 
+
   CellNumberState _CellNUmberState;
 
-  CellNumber(int dayNumber, int gridViewIndex , bool IsTheDay ){
+  CellNumber(Key key,int dayNumber, int gridViewIndex , bool IsTheDay ):super(key:key) {
 
-    _CellNUmberState= new CellNumberState(dayNumber, gridViewIndex,IsTheDay);
+       _CellNUmberState= new CellNumberState(dayNumber, gridViewIndex,IsTheDay);
 
- }
+  }
 
   @override
   State<StatefulWidget> createState(){ return _CellNUmberState;}
@@ -25,8 +26,9 @@ class CellNumberState extends State<CellNumber>
   Color CellColor;
 
 
-   CellNumberState(int dayNumber,int gridViewIndex ,bool isTheDay)
+  CellNumberState(int dayNumber,int gridViewIndex ,bool isTheDay)
   {
+
     DayNumber=dayNumber;
 
     GridViewIndex=gridViewIndex;
@@ -83,4 +85,4 @@ class CellNumberState extends State<CellNumber>
 
 
 
-  }
+}

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:easyqueue/TabActivities/SIngleCellNumber.dart';
+
 class Calendar extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -143,23 +144,25 @@ class CalendarState extends State<Calendar> {
                     mainAxisSize: MainAxisSize.min,
                   ),
                   new GridView.count(
-                        crossAxisCount: numWeekDays,
-                        childAspectRatio: (itemWidth / itemHeight),
-                        shrinkWrap: true,
-                        children: new  List.generate(getNumberOfDaysInMonth(_dateTime.month),
-                                (index) {
 
-                            //-1 ---> that cell have to be without a number
-                             int Day= (index<MonthOffset) ? -1: (index -MonthOffset)+1;
+                      crossAxisCount: numWeekDays,
+                      childAspectRatio: (itemWidth / itemHeight),
+                      shrinkWrap: true,
+                      children: new  List.generate(getNumberOfDaysInMonth(_dateTime.month),
+                            (index) {
+                          Key x =UniqueKey();
 
-                              bool IsTheDay = Day !=-1 &&
-                                  Day == DateTime.now().day &&
-                                  _dateTime.month == DateTime.now().month &&
-                                  _dateTime.year == DateTime.now().year;
+                          //-1 ---> that cell have to be without a number
+                          int Day= (index<MonthOffset) ? -1: (index -MonthOffset)+1;
 
-                              return  new CellNumber(Day, index, IsTheDay);
+                          bool IsTheDay = Day !=-1 &&
+                              Day == DateTime.now().day &&
+                              _dateTime.month == DateTime.now().month &&
+                              _dateTime.year == DateTime.now().year;
 
-                            },
+
+                          return  new CellNumber( x ,Day, index, IsTheDay);
+                        },
                       ))
                 ],
               ));
@@ -183,16 +186,16 @@ class CalendarState extends State<Calendar> {
   }
 
   void scrolMonthLeft() {
-   setState(() {
+    setState(() {
 
 
-        if (_dateTime.month == DateTime.january)
-          _dateTime = new DateTime(_dateTime.year - 1, DateTime.december);
-        else
-          _dateTime = new DateTime(_dateTime.year, _dateTime.month - 1);
+      if (_dateTime.month == DateTime.january)
+        _dateTime = new DateTime(_dateTime.year - 1, DateTime.december);
+      else
+        _dateTime = new DateTime(_dateTime.year, _dateTime.month - 1);
 
-        setDaysOffset();
-      });
+      setDaysOffset();
+    });
 
 
   }
