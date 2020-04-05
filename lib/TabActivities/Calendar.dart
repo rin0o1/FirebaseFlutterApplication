@@ -1,6 +1,11 @@
+import 'dart:ui';
+
+import 'package:easyqueue/Model/mSingleShift.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:easyqueue/TabActivities/SIngleCellNumber.dart';
+import 'package:date_utils/date_utils.dart';
+import 'package:easyqueue/Utilities/DataManager.dart';
 
 class Calendar extends StatefulWidget {
   @override
@@ -12,24 +17,25 @@ class Calendar extends StatefulWidget {
 class CalendarState extends State<Calendar> {
 
   DateTime _dateTime;
-  int MonthOffset = 0;
+  int MonthDaysOffset = 0;
   int numWeekDays = 7;
-  int Day=1;
 
-  List<CellNumber> CellsNumber=null;
+  List<SingleShift> SingleDayInformation;
+  DataManager _dateManager;
 
-
-  CalendarState() {
+  @protected
+  @mustCallSuper
+  void initState() {
 
     _dateTime = DateTime.now();
-
-    CellsNumber= new List<CellNumber>();
-
     setDaysOffset();
+    _dateManager= new DataManager();
+
   }
 
   @override
   Widget build(BuildContext context) {
+
     return new Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
@@ -39,9 +45,7 @@ class CalendarState extends State<Calendar> {
               Padding(
                 padding: EdgeInsets.fromLTRB(20, 5, 0, 0),
                 child: new Text(
-                    getMonthName(_dateTime.month) +
-                        " " +
-                        _dateTime.year.toString(),
+                    getMonthNameItalian(_dateTime.month) + " " + _dateTime.year.toString(),
                     style: Theme.of(context).textTheme.display1),
               )
             ]),
@@ -91,18 +95,8 @@ class CalendarState extends State<Calendar> {
   FutureBuilder GetCalendar(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
-    /*24 is for notification bar on Android*/
-    /*28 is for weekday labels of the row*/
-    // 55 is for iPhoneX clipping issue.
-    final double itemHeight = (size.height -
-        kToolbarHeight -
-        kBottomNavigationBarHeight -
-        24 -
-        28 -
-        55) /
-        numWeekDays;
-    //final double itemHeight=54;
-    final double itemWidth = size.width / numWeekDays;
+    final double itemWidth= 58;
+    final double itemHeight=65;
 
     return new FutureBuilder(
         builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -144,24 +138,34 @@ class CalendarState extends State<Calendar> {
                     mainAxisSize: MainAxisSize.min,
                   ),
                   new GridView.count(
-
+                      key: UniqueKey(),
                       crossAxisCount: numWeekDays,
                       childAspectRatio: (itemWidth / itemHeight),
                       shrinkWrap: true,
                       children: new  List.generate(getNumberOfDaysInMonth(_dateTime.month),
-                            (index) {
-                          Key x =UniqueKey();
-
+                              (index) {
                           //-1 ---> that cell have to be without a number
-                          int Day= (index<MonthOffset) ? -1: (index -MonthOffset)+1;
+                          int Day= (index<MonthDaysOffset) ? -1: (index -MonthDaysOffset)+1;
 
-                          bool IsTheDay = Day !=-1 &&
-                              Day == DateTime.now().day &&
-                              _dateTime.month == DateTime.now().month &&
-                              _dateTime.year == DateTime.now().year;
+                          if (Day>-1)
+                          {
+                            String Key_=  Day.toString() +"-"+  _dateTime.month.toString() + "-"+ _dateTime.year.toString();
 
 
-                          return  new CellNumber( x ,Day, index, IsTheDay);
+                            SingleShift ss;
+                            try { ss=SingleDayInformation.firstWhere((s) => s.Key==Key_);} catch(e){
+                              SingleShift ss= null;
+                            }
+
+                            DateTime SingleCellNumberDateTime =  new DateTime(_dateTime.year, _dateTime.month, Day);
+                            bool IsTheDay =  Day == DateTime.now().day &&
+                                          _dateTime.month == DateTime.now().month &&
+                                          _dateTime.year == DateTime.now().year;
+                            return new CellNumber(Day, index, IsTheDay, ss, SingleCellNumberDateTime);
+
+                          }
+
+                          return  new CellNumber(Day, index, false, null, null);
                         },
                       ))
                 ],
@@ -170,31 +174,40 @@ class CalendarState extends State<Calendar> {
   }
 
 
+  void GetMontDateFromDataManager() async
+  {
+    SingleDayInformation= new List<SingleShift>();
 
+    await _dateManager.readMonthlyShiftFromDate(_dateTime).then( (List<SingleShift> result) {
+      SingleDayInformation= result;
+    });
+
+  }
 
   void setDaysOffset() {
-
-    MonthOffset = new DateTime(_dateTime.year, _dateTime.month, 0).weekday;
-    MonthOffset == 7 ? (MonthOffset = 0) : MonthOffset;
+    MonthDaysOffset = new DateTime(_dateTime.year, _dateTime.month, 0).weekday;
   }
 
   void setToday() {
+
     setState(() {
       _dateTime = DateTime.now();
       setDaysOffset();
+      GetMontDateFromDataManager();
     });
+
   }
 
   void scrolMonthLeft() {
     setState(() {
 
-
-      if (_dateTime.month == DateTime.january)
-        _dateTime = new DateTime(_dateTime.year - 1, DateTime.december);
-      else
-        _dateTime = new DateTime(_dateTime.year, _dateTime.month - 1);
+      _dateTime= (_dateTime.month == DateTime.january) ?
+                _dateTime = new DateTime(_dateTime.year - 1, DateTime.december):
+                _dateTime = new DateTime(_dateTime.year, _dateTime.month - 1);
 
       setDaysOffset();
+      GetMontDateFromDataManager();
+
     });
 
 
@@ -203,91 +216,55 @@ class CalendarState extends State<Calendar> {
   void scrollMonthRight() {
     setState(() {
 
-      if (_dateTime.month == DateTime.december)
-        _dateTime = new DateTime(_dateTime.year + 1, DateTime.january);
-      else
-        _dateTime = new DateTime(_dateTime.year, _dateTime.month + 1);
+      _dateTime= (_dateTime.month == DateTime.december) ?
+                _dateTime = new DateTime(_dateTime.year + 1, DateTime.january) :
+                _dateTime = new DateTime(_dateTime.year, _dateTime.month + 1);
 
       setDaysOffset();
+      GetMontDateFromDataManager();
+
     });
   }
 
-  void onDayTapped() {}
 
   int getNumberOfDaysInMonth(final int month) {
-    int numDays = 28;
 
-    // Months are 1, ..., 12
-    switch (month) {
-      case 1:
-        numDays = 31;
-        break;
-      case 2:
-        numDays = 28;
-        break;
-      case 3:
-        numDays = 31;
-        break;
-      case 4:
-        numDays = 30;
-        break;
-      case 5:
-        numDays = 31;
-        break;
-      case 6:
-        numDays = 30;
-        break;
-      case 7:
-        numDays = 31;
-        break;
-      case 8:
-        numDays = 31;
-        break;
-      case 9:
-        numDays = 30;
-        break;
-      case 10:
-        numDays = 31;
-        break;
-      case 11:
-        numDays = 30;
-        break;
-      case 12:
-        numDays = 31;
-        break;
-      default:
-        numDays = 28;
-    }
-    return numDays + MonthOffset;
+
+    DateTime date= new DateTime(DateTime.now().year, month);
+    DateTime lastDayInDate= Utils.lastDayOfMonth(date);
+    int  lastDayInInt= int.parse(lastDayInDate.day.toString());
+
+    return lastDayInInt+  MonthDaysOffset;
+
   }
 
-  String getMonthName(final int month) {
-    // Months are 1, ..., 12
+  String getMonthNameItalian(final int month) {
+
     switch (month) {
       case 1:
-        return "January";
+        return "Gennaio";
       case 2:
-        return "February";
+        return "Febbraio";
       case 3:
-        return "March";
+        return "Marzo";
       case 4:
-        return "April";
+        return "Aprile";
       case 5:
-        return "May";
+        return "Maggio";
       case 6:
-        return "June";
+        return "Giugno";
       case 7:
-        return "July";
+        return "Luglio";
       case 8:
-        return "August";
+        return "Agosto";
       case 9:
-        return "September";
+        return "Settembre";
       case 10:
-        return "October";
+        return "Ottobre";
       case 11:
-        return "November";
+        return "Novembre";
       case 12:
-        return "December";
+        return "Dicembre";
       default:
         return "Unknown";
     }
@@ -315,3 +292,6 @@ class CalendarState extends State<Calendar> {
     }
   }
 }
+
+
+

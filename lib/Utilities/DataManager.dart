@@ -39,10 +39,11 @@ class DataManager
   }
 
     //if month is null means that is required current month
-   Future<List<SingleShift>> readMonthlyShiftFromDate( [String Date]) async{
+   Future<List<SingleShift>> readMonthlyShiftFromDate( [DateTime Date]) async{
 
-    String Month= Date ?? DateTime.now().month.toString();
-    String Year = Date ?? DateTime.now().year.toString();
+
+    String Month= Date.month.toString() ?? DateTime.now().month.toString();
+    String Year = Date.year.toString() ?? DateTime.now().year.toString();
 
 
     SharedPreferences sp= await SharedPreferences.getInstance();
@@ -67,13 +68,15 @@ class DataManager
         SingleShift s= SingleShift.SingleShiftFromJson(Jsondecode);
         s.setKeyFromJson();
         Shifts.add(s);
-        return Shifts;
       }
+
     }
 
-    return null;
+    return Shifts;
 
   }
+
+
 
   //During the application initialization
   getTotalInformation(){}
