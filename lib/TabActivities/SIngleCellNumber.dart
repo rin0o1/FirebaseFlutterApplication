@@ -33,7 +33,6 @@ class CellNumberState extends State<CellNumber>
 
 
 
-
   CellNumberState(int dayNumber,int gridViewIndex ,bool isTheDay, SingleShift singleShift, DateTime myDateTime)
   {
     DayNumber=dayNumber;
@@ -50,9 +49,6 @@ class CellNumberState extends State<CellNumber>
       CanSave=true;
       CellColor=Colors.orange;
     }
-
-
-
   }
 
   @override
@@ -78,22 +74,22 @@ class CellNumberState extends State<CellNumber>
 
   void onClik()
   {
-    if (CanSave)
-    {
-      setState(() {
+    setState(() {
+      if (CanSave)
+      {
         CellColor=Colors.blue;
         CanSave=false;
         SingleShift ss= new SingleShift(MyDateTime);
         _dataManager.saveModel(ss);
-      });
-    }
-    else {
-      setState(() {
-          CellColor= Colors.orange;
-          CanSave=true;
-          _dataManager.removeModelFromKey(_SingleShift.Key);
-        });
       }
+      else {
+        CellColor= Colors.orange;
+        CanSave=true;
+        _dataManager.removeModelFromKey(_SingleShift.Key);
+      }
+
+    });
+
   }
 
   Align buildDayNumberWidget( ) {

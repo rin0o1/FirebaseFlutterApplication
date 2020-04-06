@@ -31,6 +31,7 @@ class CalendarState extends State<Calendar> {
     setDaysOffset();
     _dateManager= new DataManager();
 
+    GetMontDateFromDataManagerOnStart();
   }
 
   @override
@@ -174,12 +175,24 @@ class CalendarState extends State<Calendar> {
   }
 
 
-  void GetMontDateFromDataManager() async
+  void GetMontDateFromDataManager()
   {
     SingleDayInformation= new List<SingleShift>();
 
-    await _dateManager.readMonthlyShiftFromDate(_dateTime).then( (List<SingleShift> result) {
+     _dateManager.readMonthlyShiftFromDate(_dateTime).then( (List<SingleShift> result) {
       SingleDayInformation= result;
+
+    });
+
+  }
+
+  void GetMontDateFromDataManagerOnStart()
+  {
+    SingleDayInformation= new List<SingleShift>();
+
+    _dateManager.readMonthlyShiftFromDate(_dateTime).then( (List<SingleShift> result) {
+      SingleDayInformation= result;
+      setState(() {});
     });
 
   }
@@ -194,7 +207,9 @@ class CalendarState extends State<Calendar> {
       _dateTime = DateTime.now();
       setDaysOffset();
       GetMontDateFromDataManager();
+
     });
+
 
   }
 

@@ -93,9 +93,8 @@ class DataManager
   }
 
   removeModelFromKey(String Key) async  {
-    SharedPreferences sp= await SharedPreferences.getInstance();
-    sp.remove(Key);
-
+      SharedPreferences sp= await SharedPreferences.getInstance();
+      sp.remove(Key);
   }
 
 
