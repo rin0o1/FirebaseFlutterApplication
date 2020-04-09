@@ -22,6 +22,7 @@ class HomePageState extends State<HomePage> {
         length: 2,
         child: Scaffold(
           appBar: AppBar(
+
             title: Text('App'),
             bottom: TabBar(
               tabs: <Widget>[
