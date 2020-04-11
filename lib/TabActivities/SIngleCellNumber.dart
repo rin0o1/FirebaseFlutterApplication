@@ -61,7 +61,7 @@ class CellNumberState extends State<CellNumber>
           shape: BoxShape.circle,
           color:CellColor),
       child: GestureDetector(
-        onTap: (MyDateTime==null) ? ()=>{} : onClik,
+        onTap: (MyDateTime==null) ? ()=>{} : onClick,
         child: new Column(
           children: <Widget>[
             buildDayNumberWidget(),
@@ -72,21 +72,21 @@ class CellNumberState extends State<CellNumber>
     );
   }
 
-  void onClik()
+  void onClick()
   {
     setState(() {
       if (CanSave)
       {
         CellColor=Colors.blue;
         CanSave=false;
-        SingleShift ss= new SingleShift(MyDateTime);
-        _dataManager.saveModel(ss);
+        _SingleShift= new SingleShift(MyDateTime);
+        _dataManager.saveModel(_SingleShift);
       }
       else {
         CellColor= Colors.orange;
         CanSave=true;
         _dataManager.removeModelFromKey(_SingleShift.Key);
-      }
+    }
 
     });
 

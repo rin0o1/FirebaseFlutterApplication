@@ -69,11 +69,8 @@ class DataManager
         s.setKeyFromJson();
         Shifts.add(s);
       }
-
     }
-
     return Shifts;
-
   }
 
 
