@@ -10,8 +10,6 @@ class SingleShift extends BaseModel
   double  AdditionalHours;
   double AdditionalPayment;
 
-  String AdditionalHoursInString;
-  String AdditionalPaymentInString;
 
   String Notes;
 
@@ -37,14 +35,11 @@ class SingleShift extends BaseModel
   SingleShift.SingleShiftFromJson ( Map<String, dynamic> json )
       :
         Date= json['Date'] ,
-        AdditionalHoursInString =json['AdditionalInHours'],
-        AdditionalPaymentInString = json['AdditionalPayment'],
+        AdditionalHours = double.parse(json['AdditionalInHours']),
+        AdditionalPayment = double.parse(json['AdditionalPayment']),
         Notes= json['Notes']    ;
 
-  setDoubelValueFromStrings(){
-    AdditionalPayment= double.parse(AdditionalPaymentInString);
-    AdditionalHours= double.parse(AdditionalHoursInString);
-  }
+
 
   setKeyFromJson()
   {

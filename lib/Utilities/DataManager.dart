@@ -34,17 +34,19 @@ class DataManager
   Future<ShiftSettings> readShiftSettingsFromKey() async{
     String key="ShiftSettings";
     SharedPreferences sp= await SharedPreferences.getInstance();
-    Object JsonDecode= json.decode(sp.getString(key));
+    String r= sp.getString(key);
+    Object JsonDecode= json.decode(r);
     ShiftSettings shift = ShiftSettings.ShiftSettingsFromJson(JsonDecode);
+    shift.setKey();
     return shift ;
   }
 
-   //if month is null means that is required current month
-  Future<List<SingleShift>> readMonthlyShiftFromDate( [DateTime Date]) async{
+
+  Future<List<SingleShift>> readMonthlyShiftFromDate( DateTime Date) async{
 
 
-    String Month= Date.month.toString() ?? DateTime.now().month.toString();
-    String Year = Date.year.toString() ?? DateTime.now().year.toString();
+    String Month= Date.month.toString() ;
+    String Year = Date.year.toString() ;
 
 
 
@@ -68,7 +70,7 @@ class DataManager
       if (SingleShift_!=null) {
         Object Jsondecode= json.decode(SingleShift_);
         SingleShift s= SingleShift.SingleShiftFromJson(Jsondecode);
-        s.setDoubelValueFromStrings();
+
         s.setKeyFromJson();
         Shifts.add(s);
       }
@@ -93,8 +95,24 @@ class DataManager
       sp.remove(Key);
   }
 
+
+  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  // 1- this method required the date, it is called _datetime in calendar class
+  //  I am looking a way to get that information from calendar class on swap the tab bar
+  // e.g. _dataManager.getTotalHoursAndTotalMoneyFromMonth(MyDateTime);
+  //
+  // 2- Remove the void statement and replace it with Future<List<double>>
+  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
   //Future<List<double>>
-  void getTotalHoursAndTotalMoneyFromMonth ([DateTime date]) async{
+  void getTotalHoursAndTotalMoneyFromMonth (DateTime date) async{
+
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //Remove this rows when the method @settingUpSharedPreferences will be implemented
+    ShiftSettings shiftSettings= ShiftSettings(5,7);
+    saveModel(shiftSettings);
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 
     readMonthlyShiftFromDate(date).then(( List <SingleShift> shifts) {
 
@@ -128,12 +146,14 @@ class DataManager
         result.add(TotalePayment);
         result.add(TotalHours);
 
-
       });
 
       //return result;
 
     });
+
+
+
 
 
 

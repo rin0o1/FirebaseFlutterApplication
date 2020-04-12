@@ -72,10 +72,12 @@ class CellNumberState extends State<CellNumber>
     );
   }
 
+  
+
   void onClick()
   {
 
-    setState(() {
+   setState(() {
       if (CanSave)
       {
         CellColor=Colors.blue;

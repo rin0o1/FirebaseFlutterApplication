@@ -7,11 +7,10 @@ class ShiftSettings extends BaseModel
   double DurationInHours;
   double PaymentForHour;
 
-  
 
   ShiftSettings(double DurationInHours, double PaymentForHours){
 
-    Key="ShiftSettings";
+    setKey();
     this.DurationInHours=DurationInHours;
     this.PaymentForHour=PaymentForHours;
   }
@@ -22,6 +21,10 @@ class ShiftSettings extends BaseModel
 
   setPaymentForHour(double PaymentForHour){
     this.PaymentForHour=PaymentForHour;
+  }
+
+  setKey(){
+    Key="ShiftSettings";
   }
 
 
