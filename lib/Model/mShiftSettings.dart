@@ -4,21 +4,23 @@ import 'package:easyqueue/Model/mBaseModel.dart';
 class ShiftSettings extends BaseModel
 {
 
-  String DurationInHours;
-  String PaymentForHour;
+  double DurationInHours;
+  double PaymentForHour;
 
-  ShiftSettings(String DurationInHoursInString, String PaymentForHoursInString){
+  
+
+  ShiftSettings(double DurationInHours, double PaymentForHours){
 
     Key="ShiftSettings";
-    this.DurationInHours=DurationInHoursInString;
-    this.PaymentForHour=PaymentForHoursInString;
+    this.DurationInHours=DurationInHours;
+    this.PaymentForHour=PaymentForHours;
   }
 
-  setDurationInHours(String DurationInHoursInString){
+  setDurationInHours(double DurationInHoursInString){
     this.DurationInHours=DurationInHoursInString;
   }
 
-  setPaymentForHour(String PaymentForHour){
+  setPaymentForHour(double PaymentForHour){
     this.PaymentForHour=PaymentForHour;
   }
 
@@ -26,18 +28,21 @@ class ShiftSettings extends BaseModel
   //Costruct this class from Json
   ShiftSettings.ShiftSettingsFromJson ( Map<String, dynamic> json )
           :
-            DurationInHours= json['DurationInHours'],
-            PaymentForHour = json['PaymentForHour'] ;
+            DurationInHours= double.parse( json['DurationInHours']),
+            PaymentForHour = double.parse( json['PaymentForHour'] );
 
   //Save proprieties in Json
   @override
   Map<String, dynamic> getClassInJson() => {
 
-    'DurationInHours': DurationInHours,
-    'PaymentForHour': PaymentForHour
+    'DurationInHours': DurationInHours.toString(),
+    'PaymentForHour': PaymentForHour.toString()
   };
 
-  //Save one proprieties in Json
+
+  double getPaymentForShift(){
+    return DurationInHours * PaymentForHour;
+  }
 
 
 

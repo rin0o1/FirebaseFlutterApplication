@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:easyqueue/Model/mBaseModel.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:easyqueue/Model/mShiftSettings.dart';
 import 'package:easyqueue/Model/mSingleShift.dart';
@@ -19,7 +20,7 @@ class DataManager
     if (Value){return;}
 
     //setting up default settings
-    ShiftSettings shiftSettings= ShiftSettings('5','7');
+    ShiftSettings shiftSettings= ShiftSettings(5,7);
     saveModel(shiftSettings);
 
     //sp.setString(shiftSettings.Key,JsonEncode);
@@ -28,22 +29,23 @@ class DataManager
 
   }
 
-
   //Get shift Settings information
   //return a ShiftSetting object async
   Future<ShiftSettings> readShiftSettingsFromKey() async{
     String key="ShiftSettings";
     SharedPreferences sp= await SharedPreferences.getInstance();
     Object JsonDecode= json.decode(sp.getString(key));
-    return ShiftSettings.ShiftSettingsFromJson(JsonDecode);
+    ShiftSettings shift = ShiftSettings.ShiftSettingsFromJson(JsonDecode);
+    return shift ;
   }
 
-    //if month is null means that is required current month
-   Future<List<SingleShift>> readMonthlyShiftFromDate( [DateTime Date]) async{
+   //if month is null means that is required current month
+  Future<List<SingleShift>> readMonthlyShiftFromDate( [DateTime Date]) async{
 
 
     String Month= Date.month.toString() ?? DateTime.now().month.toString();
     String Year = Date.year.toString() ?? DateTime.now().year.toString();
+
 
 
     SharedPreferences sp= await SharedPreferences.getInstance();
@@ -53,7 +55,7 @@ class DataManager
     for(int i=1; i<31; i++)
     {
 
-      //Finding shift from month
+      //Finding shift from month, building the key...
       String _day= i.toString();
       String _month= Month;
       String _year= Year;
@@ -66,6 +68,7 @@ class DataManager
       if (SingleShift_!=null) {
         Object Jsondecode= json.decode(SingleShift_);
         SingleShift s= SingleShift.SingleShiftFromJson(Jsondecode);
+        s.setDoubelValueFromStrings();
         s.setKeyFromJson();
         Shifts.add(s);
       }
@@ -73,10 +76,6 @@ class DataManager
     return Shifts;
   }
 
-
-
-  //During the application initialization
-  getTotalInformation(){}
 
   //Write model
   saveModel(BaseModel model) async{
@@ -92,6 +91,52 @@ class DataManager
   removeModelFromKey(String Key) async  {
       SharedPreferences sp= await SharedPreferences.getInstance();
       sp.remove(Key);
+  }
+
+  //Future<List<double>>
+  void getTotalHoursAndTotalMoneyFromMonth ([DateTime date]) async{
+
+    readMonthlyShiftFromDate(date).then(( List <SingleShift> shifts) {
+
+      if (shifts==null){return;}
+
+      readShiftSettingsFromKey().then((ShiftSettings shiftSettings) {
+
+        double PaymentForShift= shiftSettings.getPaymentForShift();
+        double HoursPerShift= shiftSettings.DurationInHours;
+
+        //get shifts of a specific month
+
+        int TotaleDaysWorked=shifts.length;
+
+        double TotaleAdditionalPayment=0;
+        double TotalAdditionHours=0;
+
+        for (SingleShift s in shifts){
+          TotaleAdditionalPayment+= s.AdditionalPayment;
+          TotalAdditionHours+=s.AdditionalHours;
+        }
+
+        List<double> result= new List<double>();
+
+        double TotalePayment = (PaymentForShift*TotaleDaysWorked) + TotaleAdditionalPayment;
+        double TotalHours = (HoursPerShift*TotaleDaysWorked) + TotalAdditionHours;
+
+        print(TotalePayment);
+        print(TotalHours);
+
+        result.add(TotalePayment);
+        result.add(TotalHours);
+
+
+      });
+
+      //return result;
+
+    });
+
+
+
   }
 
 

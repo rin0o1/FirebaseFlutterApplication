@@ -20,6 +20,8 @@ class CalendarState extends State<Calendar> {
   int MonthDaysOffset = 0;
   int numWeekDays = 7;
 
+  bool IsCurrentMonthAndYear;
+
   List<SingleShift> SingleDayInformation;
   DataManager _dateManager;
 
@@ -152,16 +154,19 @@ class CalendarState extends State<Calendar> {
                           {
                             String Key_=  Day.toString() +"-"+  _dateTime.month.toString() + "-"+ _dateTime.year.toString();
 
+                            SingleShift ss=null;
 
-                            SingleShift ss;
-                            try { ss=SingleDayInformation.firstWhere((s) => s.Key==Key_);} catch(e){
-                              SingleShift ss= null;
+                            //finding days already saved
+                            if (SingleDayInformation.length>=0){
+
+                              try { ss=SingleDayInformation.firstWhere((s) => s.Key==Key_);} catch(e){
+
+                              }
                             }
 
                             DateTime SingleCellNumberDateTime =  new DateTime(_dateTime.year, _dateTime.month, Day);
-                            bool IsTheDay =  Day == DateTime.now().day &&
-                                          _dateTime.month == DateTime.now().month &&
-                                          _dateTime.year == DateTime.now().year;
+                            bool IsTheDay =  Day == DateTime.now().day && IsCurrentMonthAndYear;
+
                             return new CellNumber(Day, index, IsTheDay, ss, SingleCellNumberDateTime);
 
                           }
@@ -199,6 +204,10 @@ class CalendarState extends State<Calendar> {
 
   void setDaysOffset() {
     MonthDaysOffset = new DateTime(_dateTime.year, _dateTime.month, 0).weekday;
+    MonthDaysOffset == 7 ? (MonthDaysOffset = 0) : MonthDaysOffset;
+    IsCurrentMonthAndYear= _dateTime.month == DateTime.now().month &&
+        _dateTime.year == DateTime.now().year;
+
   }
 
   void setToday() {
@@ -224,7 +233,6 @@ class CalendarState extends State<Calendar> {
       GetMontDateFromDataManager();
 
     });
-
 
   }
 

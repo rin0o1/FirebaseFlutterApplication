@@ -4,17 +4,23 @@ import 'package:easyqueue/Model/mBaseModel.dart';
 
 class SingleShift extends BaseModel
 {
+
+
   String Date;
-  String AdditionalDurationInHours;
-  String AdditionalPaymentForHour;
+  double  AdditionalHours;
+  double AdditionalPayment;
+
+  String AdditionalHoursInString;
+  String AdditionalPaymentInString;
+
   String Notes;
 
-  SingleShift (DateTime Date, [String AdditionDurationInHours,
-    String AdditionPaymentForHour, String Notes])
+  SingleShift (DateTime Date, [double AdditionHours,
+    double AdditionPayment, String Notes])
   {
     buildKey(Date);
-    this.AdditionalDurationInHours=AdditionDurationInHours;
-    this.AdditionalPaymentForHour=AdditionPaymentForHour;
+    this.AdditionalHours=AdditionHours?? 0;
+    this.AdditionalPayment=AdditionPayment?? 0;
   }
 
 
@@ -22,19 +28,23 @@ class SingleShift extends BaseModel
   Map<String, dynamic> getClassInJson() => {
     'Key' :Key,
     'Date': Date,
-    'AdditionalDurationInHours': AdditionalDurationInHours,
-    'AdditionalPaymentForHour': AdditionalPaymentForHour,
+    'AdditionalInHours': AdditionalHours.toString(),
+    'AdditionalPayment': AdditionalPayment.toString(),
     'Notes': Notes
   };
-
 
 
   SingleShift.SingleShiftFromJson ( Map<String, dynamic> json )
       :
         Date= json['Date'] ,
-        AdditionalDurationInHours=json['AdditionalDurationInHours'],
-        AdditionalPaymentForHour = json['AdditionalPaymentForHour'],
+        AdditionalHoursInString =json['AdditionalInHours'],
+        AdditionalPaymentInString = json['AdditionalPayment'],
         Notes= json['Notes']    ;
+
+  setDoubelValueFromStrings(){
+    AdditionalPayment= double.parse(AdditionalPaymentInString);
+    AdditionalHours= double.parse(AdditionalHoursInString);
+  }
 
   setKeyFromJson()
   {
@@ -54,17 +64,15 @@ class SingleShift extends BaseModel
     buildKey(dateTime);
 
   }
-  setAdditionalDurationInHours(String additionaldurationinhours){
-    this.AdditionalDurationInHours=additionaldurationinhours;
+  setAdditionalDurationInHours(double additionalhours){
+    this.AdditionalHours=additionalhours;
   }
-  setAdditionalPaymentForHour(String additionpaymentforhour){
-    this.AdditionalPaymentForHour=additionpaymentforhour;
+  setAdditionalPaymentForHour(double additionpayment){
+    this.AdditionalPayment=additionpayment;
   }
+
   setNotes(String notes) {
     this.Notes=notes;
   }
-
-
-
 
 }
