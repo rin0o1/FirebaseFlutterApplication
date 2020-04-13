@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:easyqueue/TabActivities/SIngleCellNumber.dart';
 import 'package:date_utils/date_utils.dart';
 import 'package:easyqueue/Utilities/DataManager.dart';
+import 'package:easyqueue/TabActivities/DialogActivities.dart';
+
 
 class Calendar extends StatefulWidget {
   @override
@@ -16,6 +18,8 @@ class Calendar extends StatefulWidget {
 
 class CalendarState extends State<Calendar> {
 
+
+
   DateTime _dateTime;
   int MonthDaysOffset = 0;
   int numWeekDays = 7;
@@ -24,6 +28,13 @@ class CalendarState extends State<Calendar> {
 
   List<SingleShift> SingleDayInformation;
   DataManager _dateManager;
+
+
+  AdditionalInformation additionalInformation;
+
+  CalendarState(){
+    additionalInformation= new AdditionalInformation();
+  }
 
   @protected
   @mustCallSuper
@@ -52,12 +63,19 @@ class CalendarState extends State<Calendar> {
                     style: Theme.of(context).textTheme.display1),
               )
             ]),
-            GetCalendar(context),
+            new Stack(
+              children: <Widget>[
+                GetCalendar(context),
+                additionalInformation,
+              ],
+            )
+
           ],
         ),
         Column(
           children: <Widget>[
             Container(
+
                 margin: EdgeInsets.fromLTRB(15, 10, 15, 6),
                 child: new Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -104,8 +122,10 @@ class CalendarState extends State<Calendar> {
     return new FutureBuilder(
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           return new Padding(
+
               padding: EdgeInsets.fromLTRB(2, 10, 2, 0),
               child: Column(
+
                 children: <Widget>[
                   new Row(
                     children: <Widget>[
@@ -158,20 +178,17 @@ class CalendarState extends State<Calendar> {
 
                             //finding days already saved
                             if (SingleDayInformation.length>=0){
-
                               try { ss=SingleDayInformation.firstWhere((s) => s.Key==Key_);} catch(e){
-
                               }
                             }
 
                             DateTime SingleCellNumberDateTime =  new DateTime(_dateTime.year, _dateTime.month, Day);
                             bool IsTheDay =  Day == DateTime.now().day && IsCurrentMonthAndYear;
 
-                            return new CellNumber(Day, index, IsTheDay, ss, SingleCellNumberDateTime);
-
+                            return new CellNumber(Day, index, IsTheDay, ss, SingleCellNumberDateTime, additionalInformation);
                           }
 
-                          return  new CellNumber(Day, index, false, null, null);
+                          return  new CellNumber(Day, index, false, null, null, null);
                         },
                       ))
                 ],

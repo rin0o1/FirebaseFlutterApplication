@@ -1,7 +1,9 @@
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:easyqueue/Model/mSingleShift.dart';
 import 'package:easyqueue/TabActivities/Calendar.dart';
+import 'package:easyqueue/TabActivities/DialogActivities.dart';
 import 'package:flutter/material.dart';
 import 'package:easyqueue/Utilities/DataManager.dart';
 
@@ -10,8 +12,8 @@ class CellNumber extends StatefulWidget{
 
   CellNumberState _CellNUmberState;
 
-  CellNumber(int dayNumber, int gridViewIndex , bool IsTheDay, SingleShift singleShift, DateTime myDateTime ){
-       _CellNUmberState= new CellNumberState(dayNumber, gridViewIndex,IsTheDay, singleShift, myDateTime);
+  CellNumber(int dayNumber, int gridViewIndex , bool IsTheDay, SingleShift singleShift, DateTime myDateTime , AdditionalInformation additionalInformation){
+       _CellNUmberState= new CellNumberState(dayNumber, gridViewIndex,IsTheDay, singleShift, myDateTime,additionalInformation);
   }
 
   @override
@@ -31,9 +33,11 @@ class CellNumberState extends State<CellNumber>
 
   bool CanSave=false;
 
+  AdditionalInformation _AdditionalInformation;
 
 
-  CellNumberState(int dayNumber,int gridViewIndex ,bool isTheDay, SingleShift singleShift, DateTime myDateTime)
+
+  CellNumberState(int dayNumber,int gridViewIndex ,bool isTheDay, SingleShift singleShift, DateTime myDateTime, AdditionalInformation additionalInformation)
   {
     DayNumber=dayNumber;
     GridViewIndex=gridViewIndex;
@@ -41,6 +45,7 @@ class CellNumberState extends State<CellNumber>
     CellColor= Colors.blue;
     _SingleShift= singleShift;
     MyDateTime=myDateTime;
+    _AdditionalInformation= additionalInformation;
 
     _dataManager= new DataManager();
 
@@ -62,9 +67,11 @@ class CellNumberState extends State<CellNumber>
           color:CellColor),
       child: GestureDetector(
         onTap: (MyDateTime==null) ? ()=>{} : onClick,
+        onLongPress: (_AdditionalInformation==null) ? ()=> {} : onLongClick,
         child: new Column(
           children: <Widget>[
             buildDayNumberWidget(),
+
             //buildDayEventInfoWidget(dayNumber)
           ],
         ),
@@ -72,7 +79,12 @@ class CellNumberState extends State<CellNumber>
     );
   }
 
-  
+
+  void onLongClick(){
+
+    print("----------------------------------------------------------------------------");
+    _AdditionalInformation.ShowSection();
+  }
 
   void onClick()
   {
@@ -91,7 +103,7 @@ class CellNumberState extends State<CellNumber>
         _dataManager.removeModelFromKey(_SingleShift.Key);
     }
 
-    });
+   });
 
   }
 

@@ -13,7 +13,7 @@ class TabChart extends StatefulWidget
 
 class TabChartState extends State<TabChart>
 {
-  AddTripSection TripSection= new AddTripSection();
+
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +24,12 @@ class TabChartState extends State<TabChart>
         child: new Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            TripSection
+
           ],
         ),
       ),
       floatingActionButton: new FloatingActionButton(
-        onPressed:TripSection.ShowSection,
+
         backgroundColor: Colors.orange,
         elevation: 50,
         hoverElevation: 50,

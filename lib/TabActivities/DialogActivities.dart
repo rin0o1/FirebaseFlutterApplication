@@ -4,20 +4,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 
-class AddTripSection extends StatefulWidget
+class AdditionalInformation extends StatefulWidget
 {
-  AddTripSection ({Key key}) :super( key: key);
+  AdditionalInformation ({Key key}) :super( key: key);
 
-  AddTripSectionState TripSectionState= new AddTripSectionState();
+  AdditionalInformationState TripSectionState= new AdditionalInformationState();
 
+  //Get SingleShift information
   void ShowSection(){TripSectionState.setState((){TripSectionState.viewVisible=true;});}
 
   @override
-  AddTripSectionState createState()=> TripSectionState;
+  AdditionalInformationState createState()=> TripSectionState;
 
 }
 
-class AddTripSectionState extends State<AddTripSection> {
+class AdditionalInformationState extends State<AdditionalInformation> {
   final _formKey = GlobalKey<FormState>();
   bool viewVisible = false;
 
@@ -32,54 +33,7 @@ class AddTripSectionState extends State<AddTripSection> {
         key: _formKey,
         child: Column(
             children: <Widget>[
-              Padding(
-                padding: EdgeInsets.all(8.0),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    hintText: "Inserisci",
-                    contentPadding: EdgeInsets.all(15.0),
-                    border: InputBorder.none,
-                    filled: true,
-                    fillColor: Colors.grey[200],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(8.0),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    hintText: "Inserisci",
-                    contentPadding: EdgeInsets.all(15.0),
-                    border: InputBorder.none,
-                    filled: true,
-                    fillColor: Colors.grey[200],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(8.0),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    hintText: "Inserisci",
-                    contentPadding: EdgeInsets.all(15.0),
-                    border: InputBorder.none,
-                    filled: true,
-                    fillColor: Colors.grey[200],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(8.0),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    hintText: "Inserisci",
-                    contentPadding: EdgeInsets.all(15.0),
-                    border: InputBorder.none,
-                    filled: true,
-                    fillColor: Colors.grey[200],
-                  ),
-                ),
-              ),
+
             ]
         )
     );
@@ -88,16 +42,19 @@ class AddTripSectionState extends State<AddTripSection> {
   @override
   Widget build(BuildContext context) {
     return Visibility(
-      maintainSize: true,
+      maintainSize: false,
       maintainAnimation: true,
       maintainState: true,
       visible: viewVisible,
       child: new Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.redAccent,
+
+       ),
         padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-        margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-        height: 400,
-        width: 400,
-        color: Colors.blueGrey,
+        margin: EdgeInsets.fromLTRB(10, 45, 10, 0),
+        height: 380,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -114,7 +71,7 @@ class AddTripSectionState extends State<AddTripSection> {
                     new FlatButton.icon(
                       icon: Icon(Icons.save),
                       label: Text('Salva'),
-                      color: Colors.amber,
+                      color: Colors.orangeAccent,
                       textColor: Colors.black,
                       padding: EdgeInsets.symmetric(
                           vertical: 10, horizontal: 30),
@@ -127,7 +84,7 @@ class AddTripSectionState extends State<AddTripSection> {
                     new FlatButton.icon(
                       icon: Icon(Icons.close),
                       label: Text('Cancel'),
-                      color: Colors.redAccent,
+                      color: Colors.orangeAccent,
                       textColor: Colors.black,
                       splashColor: Colors.white,
                       padding: EdgeInsets.symmetric(
