@@ -17,8 +17,8 @@ class SingleShift extends BaseModel
     double AdditionPayment, String Notes])
   {
     buildKey(Date);
-    this.AdditionalHours=AdditionHours?? 0;
-    this.AdditionalPayment=AdditionPayment?? 0;
+    this.AdditionalHours=AdditionHours ?? 0;
+    this.AdditionalPayment=AdditionPayment ?? 0;
   }
 
 
@@ -26,8 +26,8 @@ class SingleShift extends BaseModel
   Map<String, dynamic> getClassInJson() => {
     'Key' :Key,
     'Date': Date,
-    'AdditionalInHours': AdditionalHours.toString(),
-    'AdditionalPayment': AdditionalPayment.toString(),
+    'AdditionalInHours': (AdditionalHours==null) ? '0' :AdditionalHours.toString(),
+    'AdditionalPayment':(AdditionalPayment==null) ? '0' : AdditionalPayment.toString(),
     'Notes': Notes
   };
 
@@ -35,8 +35,8 @@ class SingleShift extends BaseModel
   SingleShift.SingleShiftFromJson ( Map<String, dynamic> json )
       :
         Date= json['Date'] ,
-        AdditionalHours = double.parse(json['AdditionalInHours']),
-        AdditionalPayment = double.parse(json['AdditionalPayment']),
+        AdditionalHours = double.tryParse(json['AdditionalInHours']),
+        AdditionalPayment = double.tryParse(json['AdditionalPayment']),
         Notes= json['Notes']    ;
 
 
@@ -59,11 +59,30 @@ class SingleShift extends BaseModel
     buildKey(dateTime);
 
   }
-  setAdditionalDurationInHours(double additionalhours){
-    this.AdditionalHours=additionalhours;
+
+  setAdditionalDurationInHoursInString(String additionalhours){
+
+    if(additionalhours==null || additionalhours.isEmpty){return;}
+
+    this.AdditionalHours= (double.tryParse(additionalhours));
+
   }
-  setAdditionalPaymentForHour(double additionpayment){
-    this.AdditionalPayment=additionpayment;
+  setAdditionalPaymentForHourInString(String additionpayment){
+
+    //se è null or empty
+    if (additionpayment==null|| additionpayment.isEmpty ){ return;}
+
+    this.AdditionalPayment= double.parse(additionpayment);
+
+  }
+
+  getAdditionalHoursInStirng()
+  {
+    return AdditionalHours.toString();
+  }
+
+  getAdditionPaymentInString(){
+    return AdditionalPayment.toString();
   }
 
   setNotes(String notes) {

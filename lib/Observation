@@ -1,22 +1,25 @@
-
-//AdditionalInformation
-SharedPreferenceIsAlreadySetUp: false/true
-
-
-//Informazioni prese dalle impostazioni
-DefaultSettingShift:
-
--DurationInHours
--PaymentForHour
-
-
-
-SingleShift:
-//Informazioni prese al click sul giorno del calendario
--Id --> FullDate --> Sara la key
-//Informazioni prese al long click sul giorno del calendario
--DurationInHours --> nel caso in cui non sia uguale a quella di default
--PaymentForHour  --> nel caso in cui non sia uguale a quella di default
+TextField(
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  hintText: "Inserisci",
+                  contentPadding: EdgeInsets.all(15.0),
+                  border: InputBorder.none,
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                ),
 
 
 
+
+
+                setAdditionalDurationInHoursInString(String additionalhours){
+                    if(additionalhours==null){return;}
+
+                    this.AdditionalHours= double.parse(additionalhours);
+                  }
+                  setAdditionalPaymentForHourInString(String additionpayment){
+                    if (additionpayment==null){ return;}
+
+                    this.AdditionalPayment= double.parse(additionpayment);
+
+                  }

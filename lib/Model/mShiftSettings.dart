@@ -15,11 +15,11 @@ class ShiftSettings extends BaseModel
     this.PaymentForHour=PaymentForHours;
   }
 
-  setDurationInHours(double DurationInHoursInString){
+  setDurationInHoursFromString(double DurationInHoursInString){
     this.DurationInHours=DurationInHoursInString;
   }
 
-  setPaymentForHour(double PaymentForHour){
+  setPaymentForHourFromString(double PaymentForHour){
     this.PaymentForHour=PaymentForHour;
   }
 
@@ -31,15 +31,15 @@ class ShiftSettings extends BaseModel
   //Costruct this class from Json
   ShiftSettings.ShiftSettingsFromJson ( Map<String, dynamic> json )
           :
-            DurationInHours= double.parse( json['DurationInHours']),
-            PaymentForHour = double.parse( json['PaymentForHour'] );
+            DurationInHours= double.tryParse( json['DurationInHours']),
+            PaymentForHour = double.tryParse( json['PaymentForHour'] );
 
   //Save proprieties in Json
   @override
   Map<String, dynamic> getClassInJson() => {
 
-    'DurationInHours': DurationInHours.toString(),
-    'PaymentForHour': PaymentForHour.toString()
+    'DurationInHours': (DurationInHours==null) ? '5': DurationInHours.toString(),
+    'PaymentForHour': (PaymentForHour==null) ? '7': PaymentForHour.toString()
   };
 
 

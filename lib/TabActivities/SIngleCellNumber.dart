@@ -67,7 +67,7 @@ class CellNumberState extends State<CellNumber>
           color:CellColor),
       child: GestureDetector(
         onTap: (MyDateTime==null) ? ()=>{} : onClick,
-        onLongPress: (_AdditionalInformation==null) ? ()=> {} : onLongClick,
+        onLongPress: (_SingleShift==null) ? ()=> {} : onLongClick,
         child: new Column(
           children: <Widget>[
             buildDayNumberWidget(),
@@ -82,8 +82,10 @@ class CellNumberState extends State<CellNumber>
 
   void onLongClick(){
 
-    print("----------------------------------------------------------------------------");
-    _AdditionalInformation.ShowSection();
+    if (_SingleShift==null){
+      _SingleShift= new SingleShift(MyDateTime);
+    }
+    _AdditionalInformation.ShowSection(_SingleShift);
   }
 
   void onClick()

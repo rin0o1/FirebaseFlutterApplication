@@ -25,7 +25,9 @@ class TabActivitiesState extends State<TabActivities> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return new Center(
-      child: Calendar(),
+      child: new SingleChildScrollView(
+        child: Calendar(),
+      ),
     );
   }
 }
