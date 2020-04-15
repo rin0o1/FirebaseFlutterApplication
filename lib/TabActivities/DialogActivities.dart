@@ -23,7 +23,6 @@ class AdditionalInformation extends StatefulWidget {
 class AdditionalInformationState extends State<AdditionalInformation> {
 
 
-
   bool viewVisible;
   SingleShift s;
   DataManager _DataManager;
@@ -37,18 +36,22 @@ class AdditionalInformationState extends State<AdditionalInformation> {
     viewVisible=false;
   }
 
+
   void ShowSection(SingleShift _s){
     setState(() {
-
       s=_s;
-      AdditionHoursInText=( (s==null) || s.AdditionalHours== 0.0 || s.AdditionalHours==null )  ? '' : s.getAdditionalHoursInStirng();
-      AdditionPaymentInText= ( (s==null) || s.AdditionalPayment== 0.0 || s.AdditionalPayment==null) ? '' : s.getAdditionPaymentInString();
+
+      AdditionHoursInText=( (s==null) || s.AdditionalHours== 0.0 || s.AdditionalHours==null )
+                              ? '' : s.getAdditionalHoursInStirng();
+
+      AdditionPaymentInText= ( (s==null) || s.AdditionalPayment== 0.0 || s.AdditionalPayment==null)
+                              ? '' : s.getAdditionPaymentInString();
+
       NotesText= ( (s==null) || s.Notes==null ) ? '' : s.Notes ;
 
       viewVisible=true;
 
     });
-
   }
 
   void HideSection() {
@@ -59,9 +62,8 @@ class AdditionalInformationState extends State<AdditionalInformation> {
 
   @override
   Widget build(BuildContext context) {
-    return new SingleChildScrollView(
 
-      child: new Column(
+      return new Column(
         children: <Widget>[
           Visibility(
             maintainSize: false,
@@ -130,12 +132,11 @@ class AdditionalInformationState extends State<AdditionalInformation> {
             ),
           )
         ],
-      ),
+
     );
   }
 
-
-  Form getDialogForm() {
+   Form getDialogForm() {
     return Form(
         key: UniqueKey(),
         child: new Column(
@@ -147,7 +148,7 @@ class AdditionalInformationState extends State<AdditionalInformation> {
                 onChanged: (String v){
                   AdditionHoursInText=v;
                 },
-                keyboardType: TextInputType.datetime,
+                keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   hintText: "Ore aggiuntive",
                   labelText: "Ore aggiuntive",

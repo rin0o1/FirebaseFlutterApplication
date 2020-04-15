@@ -50,67 +50,70 @@ class CalendarState extends State<Calendar> {
   @override
   Widget build(BuildContext context) {
 
-    return new Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Column(
-          children: <Widget>[
-            Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
-              Padding(
-                padding: EdgeInsets.fromLTRB(20, 5, 0, 0),
-                child: new Text(
-                    getMonthNameItalian(_dateTime.month) + " " + _dateTime.year.toString(),
-                    style: Theme.of(context).textTheme.display1),
+    return SingleChildScrollView(
+      child: new Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Column(
+            children: <Widget>[
+              Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.fromLTRB(20, 5, 0, 0),
+                  child: new Text(
+                      getMonthNameItalian(_dateTime.month) + " " + _dateTime.year.toString(),
+                      style: Theme.of(context).textTheme.display1),
+                )
+              ]),
+              new Stack(
+                children: <Widget>[
+                  GetCalendar(context),
+                  additionalInformation,
+                ],
               )
-            ]),
-            new Stack(
-              children: <Widget>[
-                GetCalendar(context),
-                additionalInformation,
-              ],
-            )
 
-          ],
-        ),
-        Column(
-          children: <Widget>[
-            Container(
+            ],
+          ),
+          Column(
+            children: <Widget>[
+              Container(
 
-                margin: EdgeInsets.fromLTRB(15, 10, 15, 6),
-                child: new Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    FloatingActionButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(13.0))),
-                      backgroundColor: Colors.green,
-                      child: new Icon(Icons.chevron_left),
-                      onPressed: scrolMonthLeft,
-                    ),
-                    FloatingActionButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(13.0))),
-                      backgroundColor: Colors.deepOrange,
-                      child: new Icon(Icons.calendar_today),
-                      tooltip: "Torna ad oggi",
-                      onPressed: setToday,
-                    ),
-                    FloatingActionButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(13.0))),
-                      backgroundColor: Colors.green,
-                      child: new Icon(Icons.chevron_right),
-                      onPressed: scrollMonthRight,
-                    ),
-                  ],
-                )),
-          ],
-        )
-      ],
+                  margin: EdgeInsets.fromLTRB(15, 10, 15, 6),
+                  child: new Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      FloatingActionButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                            BorderRadius.all(Radius.circular(13.0))),
+                        backgroundColor: Colors.green,
+                        child: new Icon(Icons.chevron_left),
+                        onPressed: scrolMonthLeft,
+                      ),
+                      FloatingActionButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                            BorderRadius.all(Radius.circular(13.0))),
+                        backgroundColor: Colors.deepOrange,
+                        child: new Icon(Icons.calendar_today),
+                        tooltip: "Torna ad oggi",
+                        onPressed: setToday,
+                      ),
+                      FloatingActionButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                            BorderRadius.all(Radius.circular(13.0))),
+                        backgroundColor: Colors.green,
+                        child: new Icon(Icons.chevron_right),
+                        onPressed: scrollMonthRight,
+                      ),
+                    ],
+                  )),
+            ],
+          )
+        ],
+      ),
     );
+
   }
 
   FutureBuilder GetCalendar(BuildContext context) {
@@ -166,7 +169,7 @@ class CalendarState extends State<Calendar> {
                       childAspectRatio: (itemWidth / itemHeight),
                       shrinkWrap: true,
                       children: new  List.generate(getNumberOfDaysInMonth(_dateTime.month),
-                              (index) {
+                            (index) {
                           //-1 ---> that cell have to be without a number
                           int Day= (index<MonthDaysOffset) ? -1: (index -MonthDaysOffset)+1;
 
@@ -201,7 +204,7 @@ class CalendarState extends State<Calendar> {
   {
     SingleDayInformation= new List<SingleShift>();
 
-     _dateManager.readMonthlyShiftFromDate(_dateTime).then( (List<SingleShift> result) {
+    _dateManager.readMonthlyShiftFromDate(_dateTime).then( (List<SingleShift> result) {
       SingleDayInformation= result;
 
     });
@@ -243,8 +246,8 @@ class CalendarState extends State<Calendar> {
     setState(() {
 
       _dateTime= (_dateTime.month == DateTime.january) ?
-                _dateTime = new DateTime(_dateTime.year - 1, DateTime.december):
-                _dateTime = new DateTime(_dateTime.year, _dateTime.month - 1);
+      _dateTime = new DateTime(_dateTime.year - 1, DateTime.december):
+      _dateTime = new DateTime(_dateTime.year, _dateTime.month - 1);
 
       setDaysOffset();
       GetMontDateFromDataManager();
@@ -257,8 +260,8 @@ class CalendarState extends State<Calendar> {
     setState(() {
 
       _dateTime= (_dateTime.month == DateTime.december) ?
-                _dateTime = new DateTime(_dateTime.year + 1, DateTime.january) :
-                _dateTime = new DateTime(_dateTime.year, _dateTime.month + 1);
+      _dateTime = new DateTime(_dateTime.year + 1, DateTime.january) :
+      _dateTime = new DateTime(_dateTime.year, _dateTime.month + 1);
 
       setDaysOffset();
       GetMontDateFromDataManager();
