@@ -24,8 +24,7 @@ class TabActivitiesState extends State<TabActivities> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return new Center(
-      child: Calendar(),
-    );
+    return Calendar();
+
   }
 }

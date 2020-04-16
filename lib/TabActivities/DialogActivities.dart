@@ -112,6 +112,7 @@ class AddTripSectionState extends State<AddTripSection> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     new FlatButton.icon(
+
                       icon: Icon(Icons.save),
                       label: Text('Salva'),
                       color: Colors.amber,

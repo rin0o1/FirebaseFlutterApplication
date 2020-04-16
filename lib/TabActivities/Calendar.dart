@@ -61,6 +61,7 @@ class CalendarState extends State<Calendar> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     FloatingActionButton(
+                      heroTag: 'CalFloat1',
                       shape: RoundedRectangleBorder(
                           borderRadius:
                           BorderRadius.all(Radius.circular(13.0))),
@@ -69,7 +70,9 @@ class CalendarState extends State<Calendar> {
                       onPressed: scrolMonthLeft,
                     ),
                     FloatingActionButton(
+                      heroTag: 'CalFloat2',
                       shape: RoundedRectangleBorder(
+
                           borderRadius:
                           BorderRadius.all(Radius.circular(13.0))),
                       backgroundColor: Colors.deepOrange,
@@ -78,6 +81,7 @@ class CalendarState extends State<Calendar> {
                       onPressed: setToday,
                     ),
                     FloatingActionButton(
+                      heroTag: 'CalFloat3',
                       shape: RoundedRectangleBorder(
                           borderRadius:
                           BorderRadius.all(Radius.circular(13.0))),

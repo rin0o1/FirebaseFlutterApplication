@@ -1,3 +1,6 @@
+import 'package:easyqueue/Settings/NavDrawer.dart';
+import 'package:easyqueue/TabActivities/Calendar.dart';
+import 'Settings/NavDrawer.dart';
 import 'TabActivities/TabActivities.dart';
 import 'TabChart/TabChart.dart';
 import 'package:flutter/material.dart';
@@ -13,38 +16,14 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "App su App",
-      theme: ThemeData(
-        primarySwatch: Colors.amber,
-      ),
-      home: DefaultTabController(
-        length: 2,
-        child: Scaffold(
+    return  Scaffold(
+          drawer: NavDrawer(),
           appBar: AppBar(
-
             title: Text('App'),
-            bottom: TabBar(
-              tabs: <Widget>[
-                Tab(
-                  text: "Attività",
-                ),
-                Tab(
-                  text: "Statistiche",
-                )
-              ],
-            ),
           ),
-          body: TabBarView(
-            physics: NeverScrollableScrollPhysics(),
-            children: <Widget>[
-              TabActivities(),
-              TabChart()
-            ],
-          ),
-        ),
-      ),
-      debugShowCheckedModeBanner: false,
+          body:TabActivities(),
     );
+
+
   }
 }

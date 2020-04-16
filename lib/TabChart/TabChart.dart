@@ -1,4 +1,5 @@
 
+import 'package:easyqueue/Settings/NavDrawer.dart';
 import 'package:easyqueue/TabActivities/DialogActivities.dart';
 import 'package:flutter/material.dart';
 
@@ -18,9 +19,28 @@ class TabChartState extends State<TabChart>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //backgroundColor: Colors.blue,
-      body: new SafeArea(
+    drawer: NavDrawer(),
+body: Column(
+  children: <Widget>[
+    Row(
+      children: <Widget>[
+        FlatButton(
 
+          onPressed: (){
+            Navigator.pop(context);
+          },
+          child: Text('Calendar'),
+        ),
+        FlatButton(
+
+          onPressed: (){
+            Navigator.pushNamed(context, '/chart');
+          },
+          child: Text('Charts'),
+        ),
+
+
+        SafeArea(
         child: new Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -28,7 +48,8 @@ class TabChartState extends State<TabChart>
           ],
         ),
       ),
-      floatingActionButton: new FloatingActionButton(
+      FloatingActionButton(
+        heroTag: 'ChartActionButton',
         onPressed:TripSection.ShowSection,
         backgroundColor: Colors.orange,
         elevation: 50,
@@ -36,8 +57,13 @@ class TabChartState extends State<TabChart>
         splashColor: Colors.blue,
         tooltip: 'Increment',
         child: new Icon(Icons.add),
-
       ),
+      ],
+    )
+  ],
+),
+
+
     );
 
   }
