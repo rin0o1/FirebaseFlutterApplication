@@ -13,7 +13,6 @@ class ChartReport extends StatefulWidget {
   @override
   ChartReporState createState() => ChartReporState();
 
-
 }
 
 class ChartReporState extends State<ChartReport>{

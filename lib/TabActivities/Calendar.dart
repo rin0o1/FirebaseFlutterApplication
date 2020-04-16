@@ -130,6 +130,7 @@ class CalendarState extends State<Calendar> {
       return new Padding(
           padding: EdgeInsets.fromLTRB(2, 10, 2, 0),
           child: Column(
+            key: UniqueKey(),
             children: <Widget>[
               new Row(
                 children: <Widget>[
@@ -165,7 +166,7 @@ class CalendarState extends State<Calendar> {
                 mainAxisSize: MainAxisSize.min,
               ),
               new GridView.count(
-                  key: UniqueKey(),
+
                   crossAxisCount: numWeekDays,
                   childAspectRatio: (itemWidth / itemHeight),
                   shrinkWrap: true,

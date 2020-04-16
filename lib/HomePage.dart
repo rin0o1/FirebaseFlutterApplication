@@ -37,12 +37,9 @@ class HomePageState extends State<HomePage> {
             ),
           ),
           body: TabBarView(
-            physics: NeverScrollableScrollPhysics(),
             children: <Widget>[
-
               TabChart(),
               TabActivities(),
-
             ],
           ),
         ),

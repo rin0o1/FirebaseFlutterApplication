@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:easyqueue/Model/mBaseModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -105,7 +106,7 @@ class DataManager
   //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
   //Future<List<double>>
-  void getTotalHoursAndTotalMoneyFromMonth (DateTime date) async{
+  Future<List<double>> getTotalHoursAndTotalMoneyFromMonth (DateTime date) async{
 
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //Remove this rows when the method @settingUpSharedPreferences will be implemented
@@ -137,18 +138,24 @@ class DataManager
 
         List<double> result= new List<double>();
 
+
         double TotalePayment = (PaymentForShift*TotaleDaysWorked) + TotaleAdditionalPayment;
         double TotalHours = (HoursPerShift*TotaleDaysWorked) + TotalAdditionHours;
 
+
+        print(TotaleDaysWorked);
         print(TotalePayment);
         print(TotalHours);
 
+        result.add(TotaleDaysWorked.toDouble());
         result.add(TotalePayment);
         result.add(TotalHours);
 
+        return result;
+
       });
 
-      //return result;
+      return null;
 
     });
 
