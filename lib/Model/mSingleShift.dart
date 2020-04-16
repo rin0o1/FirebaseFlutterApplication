@@ -9,8 +9,6 @@ class SingleShift extends BaseModel
   String Date;
   double  AdditionalHours;
   double AdditionalPayment;
-
-
   String Notes;
 
   SingleShift (DateTime Date, [double AdditionHours,

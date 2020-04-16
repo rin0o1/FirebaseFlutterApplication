@@ -1,7 +1,6 @@
 
-import 'package:easyqueue/TabActivities/DialogActivities.dart';
 import 'package:flutter/material.dart';
-
+import 'package:easyqueue/TabChart/ChartReport.dart';
 import 'package:flutter/cupertino.dart';
 
 class TabChart extends StatefulWidget
@@ -14,17 +13,13 @@ class TabChart extends StatefulWidget
 class TabChartState extends State<TabChart>
 {
 
-  AdditionalInformation a= new AdditionalInformation();
+
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
-      //backgroundColor: Colors.blue,
-      body: new SafeArea(
-        child: a
-      ),
-    );
+    return ChartReport();
 
   }
+
 }
 

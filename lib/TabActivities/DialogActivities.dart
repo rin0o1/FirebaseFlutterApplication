@@ -66,6 +66,7 @@ class AdditionalInformationState extends State<AdditionalInformation> {
       return new Column(
         children: <Widget>[
           Visibility(
+
             maintainSize: false,
             maintainAnimation: true,
             maintainState: true,

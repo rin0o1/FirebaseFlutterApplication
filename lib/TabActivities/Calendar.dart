@@ -16,6 +16,9 @@ class Calendar extends StatefulWidget {
 }
 
 class CalendarState extends State<Calendar> {
+
+
+
   DateTime _dateTime;
   int MonthDaysOffset = 0;
   int numWeekDays = 7;
@@ -43,74 +46,77 @@ class CalendarState extends State<Calendar> {
 
   @override
   Widget build(BuildContext context) {
-
-    double height_= MediaQuery.of(context).size.height;
-    double OffsetAppBar= 130; //It should be calculated
+    double height_ = MediaQuery.of(context).size.height;
+    double OffsetAppBar = 130; //It should be calculated
 
     return SingleChildScrollView(
+
         child: Container(
-          height: height_-OffsetAppBar,
-          child: new Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Column(
-          children: <Widget>[
-            Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
-              Padding(
-                padding: EdgeInsets.fromLTRB(20, 15, 0, 10),
-                child: new Text(
-                    getMonthNameItalian(_dateTime.month) +
-                        " " +
-                        _dateTime.year.toString(),
-                    style: Theme.of(context).textTheme.display1),
-              )
-            ]),
-            new Stack(
+            height: height_ - OffsetAppBar,
+            child: new Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                GetCalendar(context),
-                additionalInformation,
-              ],
-            )
-          ],
-        ),
-        Column(
-          children: <Widget>[
-            Container(
-                margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
-                child: new Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Column(
                   children: <Widget>[
-                    FloatingActionButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(13.0))),
-                      backgroundColor: Colors.green,
-                      child: new Icon(Icons.chevron_left),
-                      onPressed: scrolMonthLeft,
-                    ),
-                    FloatingActionButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(13.0))),
-                      backgroundColor: Colors.deepOrange,
-                      child: new Icon(Icons.calendar_today),
-                      tooltip: "Torna ad oggi",
-                      onPressed: setToday,
-                    ),
-                    FloatingActionButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(13.0))),
-                      backgroundColor: Colors.green,
-                      child: new Icon(Icons.chevron_right),
-                      onPressed: scrollMonthRight,
-                    ),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(20, 15, 0, 10),
+                            child: new Text(
+                                getMonthNameItalian(_dateTime.month) +
+                                    " " +
+                                    _dateTime.year.toString(),
+                                style: Theme.of(context).textTheme.display1),
+                          )
+                        ]),
+                    new Stack(
+
+                      children: <Widget>[
+                        GetCalendar(context),
+                        additionalInformation,
+                      ],
+                    )
                   ],
-                )),
-          ],
-        )
-      ],
-    )));
+                ),
+                Column(
+                  children: <Widget>[
+                    Container(
+                        margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                        child: new Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            FloatingActionButton(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(13.0))),
+                              backgroundColor: Colors.green,
+                              child: new Icon(Icons.chevron_left),
+                              onPressed: scrolMonthLeft,
+                            ),
+                            FloatingActionButton(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(13.0))),
+                              backgroundColor: Colors.deepOrange,
+                              child: new Icon(Icons.calendar_today),
+                              tooltip: "Torna ad oggi",
+                              onPressed: setToday,
+                            ),
+                            FloatingActionButton(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(13.0))),
+                              backgroundColor: Colors.green,
+                              child: new Icon(Icons.chevron_right),
+                              onPressed: scrollMonthRight,
+                            ),
+                          ],
+                        )),
+                  ],
+                )
+              ],
+            )));
   }
 
   FutureBuilder GetCalendar(BuildContext context) {
