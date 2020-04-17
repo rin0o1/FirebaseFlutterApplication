@@ -68,6 +68,7 @@ class ChartReporState extends State<SingleMonthCharts> {
                 children: <Widget>[
                   buildPieChar(),
                   buildRadialChar(),
+
                 ],
               )
             ],

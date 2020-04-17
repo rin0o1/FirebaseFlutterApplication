@@ -1,7 +1,5 @@
-
 import 'package:flutter/material.dart';
-import 'dart:async';
-import 'package:flutter_circular_chart/flutter_circular_chart.dart';
+import 'GeneralSituation.dart';
 import 'SingleMonthCharts.dart';
 
 class ChartReport extends StatefulWidget {
@@ -32,21 +30,20 @@ class ChartReporState extends State<ChartReport>{
 
     return Container(
       child: Column(
-
+        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-
           Row(
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.fromLTRB(20, 15, 0, 0),
                 child: new Text('Report ${_dateTime.month}-${_dateTime.year}',
                     style: Theme.of(context).textTheme.display1
-
                     ),
               ),
             ],
           ),
-          _SingleMonthCharts
+          _SingleMonthCharts,
+          BarChartSample3()
         ],
       ),
 

@@ -38,8 +38,8 @@ class HomePageState extends State<HomePage> {
           ),
           body: TabBarView(
             children: <Widget>[
-              TabActivities(),
               TabChart(),
+              TabActivities(),
             ],
           ),
         ),
