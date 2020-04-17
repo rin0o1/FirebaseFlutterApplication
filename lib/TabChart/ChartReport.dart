@@ -17,6 +17,16 @@ class ChartReport extends StatefulWidget {
 
 class ChartReporState extends State<ChartReport>{
 
+
+  DateTime  _dateTime;
+  SingleMonthCharts _SingleMonthCharts;
+  
+
+  ChartReporState(){
+    _dateTime= DateTime.now();
+    _SingleMonthCharts= new SingleMonthCharts(_dateTime);
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -24,17 +34,19 @@ class ChartReporState extends State<ChartReport>{
       child: Column(
 
         children: <Widget>[
+
           Row(
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.fromLTRB(20, 15, 0, 10),
-                child: new Text('Report',
-                    style: Theme.of(context).textTheme.display1),
+                padding: EdgeInsets.fromLTRB(20, 15, 0, 0),
+                child: new Text('Report ${_dateTime.month}-${_dateTime.year}',
+                    style: Theme.of(context).textTheme.display1
+
+                    ),
               ),
             ],
           ),
-
-          SingelMonthCharts()
+          _SingleMonthCharts
         ],
       ),
 

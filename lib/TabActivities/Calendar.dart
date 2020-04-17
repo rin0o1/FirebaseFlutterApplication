@@ -1,5 +1,6 @@
-import 'dart:ui';
 
+import 'dart:ui';
+import 'package:easyqueue/SharedStuff/Loader.dart';
 import 'package:easyqueue/Model/mSingleShift.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,7 @@ class Calendar extends StatefulWidget {
 class CalendarState extends State<Calendar> {
 
 
+  bool CanRender=false;
 
   DateTime _dateTime;
   int MonthDaysOffset = 0;
@@ -49,74 +51,85 @@ class CalendarState extends State<Calendar> {
     double height_ = MediaQuery.of(context).size.height;
     double OffsetAppBar = 130; //It should be calculated
 
-    return SingleChildScrollView(
+    if (CanRender) {
+      return SingleChildScrollView(
 
-        child: Container(
-            height: height_ - OffsetAppBar,
-            child: new Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Column(
-                  children: <Widget>[
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(20, 15, 0, 10),
-                            child: new Text(
-                                getMonthNameItalian(_dateTime.month) +
-                                    " " +
-                                    _dateTime.year.toString(),
-                                style: Theme.of(context).textTheme.display1),
-                          )
-                        ]),
-                    new Stack(
-
-                      children: <Widget>[
-                        GetCalendar(context),
-                        additionalInformation,
-                      ],
-                    )
-                  ],
-                ),
-                Column(
-                  children: <Widget>[
-                    Container(
-                        margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
-                        child: new Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Container(
+              height: height_ - OffsetAppBar,
+              child: new Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Column(
+                    children: <Widget>[
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
-                            FloatingActionButton(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(13.0))),
-                              backgroundColor: Colors.green,
-                              child: new Icon(Icons.chevron_left),
-                              onPressed: scrolMonthLeft,
-                            ),
-                            FloatingActionButton(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(13.0))),
-                              backgroundColor: Colors.deepOrange,
-                              child: new Icon(Icons.calendar_today),
-                              tooltip: "Torna ad oggi",
-                              onPressed: setToday,
-                            ),
-                            FloatingActionButton(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(13.0))),
-                              backgroundColor: Colors.green,
-                              child: new Icon(Icons.chevron_right),
-                              onPressed: scrollMonthRight,
-                            ),
-                          ],
-                        )),
-                  ],
-                )
-              ],
-            )));
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(20, 15, 0, 10),
+                              child: new Text(
+                                  getMonthNameItalian(_dateTime.month) +
+                                      " " +
+                                      _dateTime.year.toString(),
+                                  style: Theme
+                                      .of(context)
+                                      .textTheme
+                                      .display1),
+                            )
+                          ]),
+                      new Stack(
+
+                        children: <Widget>[
+                          GetCalendar(context),
+                          additionalInformation,
+                        ],
+                      )
+                    ],
+                  ),
+                  Column(
+                    children: <Widget>[
+                      Container(
+                          margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                          child: new Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              FloatingActionButton(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                    BorderRadius.all(Radius.circular(13.0))),
+                                backgroundColor: Colors.green,
+                                child: new Icon(Icons.chevron_left),
+                                onPressed: scrolMonthLeft,
+                              ),
+                              FloatingActionButton(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                    BorderRadius.all(Radius.circular(13.0))),
+                                backgroundColor: Colors.deepOrange,
+                                child: new Icon(Icons.calendar_today),
+                                tooltip: "Torna ad oggi",
+                                onPressed: setToday,
+                              ),
+                              FloatingActionButton(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                    BorderRadius.all(Radius.circular(13.0))),
+                                backgroundColor: Colors.green,
+                                child: new Icon(Icons.chevron_right),
+                                onPressed: scrollMonthRight,
+                              ),
+                            ],
+                          )),
+                    ],
+                  )
+                ],
+              )));
+    }
+    //Waiting file reading
+    return Loader();
+
+
+
+
   }
 
   FutureBuilder GetCalendar(BuildContext context) {
@@ -230,7 +243,11 @@ class CalendarState extends State<Calendar> {
         .readMonthlyShiftFromDate(_dateTime)
         .then((List<SingleShift> result) {
       SingleDayInformation = result;
-      setState(() {});
+
+      setState(() {
+        CanRender=true;
+      });
+
     });
   }
 

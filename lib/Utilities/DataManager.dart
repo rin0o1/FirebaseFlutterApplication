@@ -86,7 +86,7 @@ class DataManager
     SharedPreferences sp= await SharedPreferences.getInstance();
     //Getting model in Json
     String JsonEncode=json.encode(model.getClassInJson());
-    print(JsonEncode);
+
     //Saving model
     sp.setString(model.Key, JsonEncode);
   }
@@ -106,8 +106,10 @@ class DataManager
   //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
   //Future<List<double>>
-  Future<List<double>> getTotalHoursAndTotalMoneyFromMonth (DateTime date) async{
+  Future<List<double>> getTotalHoursAndTotalMoneyFromMonth (DateTime date)  {
 
+
+    List<double> result;
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //Remove this rows when the method @settingUpSharedPreferences will be implemented
     ShiftSettings shiftSettings= ShiftSettings(5,7);
@@ -115,11 +117,11 @@ class DataManager
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
-    readMonthlyShiftFromDate(date).then(( List <SingleShift> shifts) {
+      return readMonthlyShiftFromDate(date).then(( List <SingleShift> shifts)  {
 
-      if (shifts==null){return;}
+      //if (shifts==null){return;}
 
-      readShiftSettingsFromKey().then((ShiftSettings shiftSettings) {
+      return readShiftSettingsFromKey().then((ShiftSettings shiftSettings) {
 
         double PaymentForShift= shiftSettings.getPaymentForShift();
         double HoursPerShift= shiftSettings.DurationInHours;
@@ -136,7 +138,7 @@ class DataManager
           TotalAdditionHours+=s.AdditionalHours;
         }
 
-        List<double> result= new List<double>();
+       result= new List<double>();
 
 
         double TotalePayment = (PaymentForShift*TotaleDaysWorked) + TotaleAdditionalPayment;
@@ -151,17 +153,11 @@ class DataManager
         result.add(TotalePayment);
         result.add(TotalHours);
 
-        return result;
 
+        return result;
       });
 
-      return null;
-
     });
-
-
-
-
 
 
   }
