@@ -151,8 +151,8 @@ class AdditionalInformationState extends State<AdditionalInformation> {
                 },
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
-                  hintText: "Ore aggiuntive",
-                  labelText: "Ore aggiuntive",
+                  hintText: "Ore straordinarie",
+                  labelText: "Ore straordinarie",
                   contentPadding: EdgeInsets.all(15.0),
                   border: InputBorder.none,
                   filled: true,
@@ -170,8 +170,8 @@ class AdditionalInformationState extends State<AdditionalInformation> {
                 },
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
-                  hintText: "Pagamenti aggiuntivi",
-                  labelText: "Pagamenti aggiuntivi",
+                  hintText: "Guadagno per ora straordinaria",
+                  labelText: "Guadagno per ora straordinaria",
                   contentPadding: EdgeInsets.all(15.0),
                   border: InputBorder.none,
                   filled: true,

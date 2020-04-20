@@ -43,7 +43,7 @@ class DataManager
   }
 
 
-  Future<List<SingleShift>> readMonthlyShiftFromDate( DateTime Date) async{
+  Future<List<SingleShift>> getMonthlyShiftFromDate( DateTime Date) async{
 
 
     String Month= Date.month.toString() ;
@@ -79,6 +79,56 @@ class DataManager
     return Shifts;
   }
 
+  Future<List<double>> getTotalPayment() async{
+
+    SharedPreferences sp= await SharedPreferences.getInstance();
+
+    String keySett="ShiftSettings";
+    String r= sp.getString(keySett);
+    if (r==null){return null;}
+    Object JsonDecode= json.decode(r);
+    ShiftSettings ShiftSetting = ShiftSettings.ShiftSettingsFromJson(JsonDecode);
+
+    double PaymentForShift= ShiftSetting.PaymentForHour*ShiftSetting.DurationInHours;
+
+    List<double> _totalPayment= new List<double>();
+    String _year=DateTime.now().year.toString();
+    String key;
+    //for each year
+    for (int m=0; m<12; m++){
+      double TotalForMonth=0;
+      String _month=(m+1).toString();
+
+      //for each month
+      for (int d=1; d<31; d++){
+        String _day=d.toString();
+
+        key= _day+"-"+_month+"-"+_year;
+
+        String SingleShift_= sp.getString(key);
+
+        if (SingleShift_!=null) {
+          Object Jsondecode= json.decode(SingleShift_);
+          SingleShift s= SingleShift.SingleShiftFromJson(Jsondecode);
+
+          //se non è valorizzato il guardagno per ogni ora straordinaria prendere quello di default
+          //altrimenti prendere il valore settato
+          double Straordinari;
+          if (s.AdditionalPayment!=0.0){
+            Straordinari= s.AdditionalPayment*s.AdditionalHours;
+          }
+          else  {
+            Straordinari= ShiftSetting.PaymentForHour*s.AdditionalHours;
+          }
+          TotalForMonth+= (Straordinari+PaymentForShift);
+        }
+       // print("${_month} --------------> ${TotalForMonth}");
+
+      }
+      _totalPayment.add(TotalForMonth);
+    }
+    return _totalPayment;
+  }
 
   //Write model
   saveModel(BaseModel model) async{
@@ -96,7 +146,6 @@ class DataManager
       sp.remove(Key);
   }
 
-
   //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   // 1- this method required the date, it is called _datetime in calendar class
   //  I am looking a way to get that information from calendar class on swap the tab bar
@@ -108,7 +157,6 @@ class DataManager
   //Future<List<double>>
   Future<List<double>> getTotalHoursAndTotalMoneyFromMonth (DateTime date)  {
 
-
     List<double> result;
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //Remove this rows when the method @settingUpSharedPreferences will be implemented
@@ -116,12 +164,13 @@ class DataManager
     saveModel(shiftSettings);
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
+      return getMonthlyShiftFromDate(date).then(( List <SingleShift> shifts)  {
 
-      return readMonthlyShiftFromDate(date).then(( List <SingleShift> shifts)  {
-
-      //if (shifts==null){return;}
+      if (shifts==null){return null;}
 
       return readShiftSettingsFromKey().then((ShiftSettings shiftSettings) {
+
+        if (shiftSettings==null){return null;}
 
         double PaymentForShift= shiftSettings.getPaymentForShift();
         double HoursPerShift= shiftSettings.DurationInHours;
@@ -145,23 +194,19 @@ class DataManager
         double TotalHours = (HoursPerShift*TotaleDaysWorked) + TotalAdditionHours;
 
 
-        print(TotaleDaysWorked);
+        /*print(TotaleDaysWorked);
         print(TotalePayment);
-        print(TotalHours);
+        print(TotalHours);*/
 
         result.add(TotaleDaysWorked.toDouble());
         result.add(TotalePayment);
         result.add(TotalHours);
 
-
         return result;
       });
-
     });
 
-
   }
-
 
 
 }

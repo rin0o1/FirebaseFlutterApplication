@@ -26,7 +26,7 @@ class ChartReporState extends State<ChartReport>{
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)  {
 
     return Container(
       child: Column(
@@ -43,7 +43,7 @@ class ChartReporState extends State<ChartReport>{
             ],
           ),
           _SingleMonthCharts,
-          BarChartSample3()
+           GeneralSituationBarChart()
         ],
       ),
 

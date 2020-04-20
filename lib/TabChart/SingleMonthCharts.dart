@@ -145,6 +145,9 @@ class ChartReporState extends State<SingleMonthCharts> {
         return;
       }
 
+
+
+
       setState(() {
         CanRender = true;
         DayWorked = r[0].toInt();

@@ -230,7 +230,7 @@ class CalendarState extends State<Calendar> {
     SingleDayInformation = new List<SingleShift>();
 
     _dateManager
-        .readMonthlyShiftFromDate(_dateTime)
+        .getMonthlyShiftFromDate(_dateTime)
         .then((List<SingleShift> result) {
       SingleDayInformation = result;
     });
@@ -240,7 +240,7 @@ class CalendarState extends State<Calendar> {
     SingleDayInformation = new List<SingleShift>();
 
     _dateManager
-        .readMonthlyShiftFromDate(_dateTime)
+        .getMonthlyShiftFromDate(_dateTime)
         .then((List<SingleShift> result) {
       SingleDayInformation = result;
 
