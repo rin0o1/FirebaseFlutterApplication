@@ -144,7 +144,7 @@ class DataManager
   removeModelFromKey(String Key) async  {
       SharedPreferences sp= await SharedPreferences.getInstance();
       sp.remove(Key);
-  }
+  } 
 
   //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   // 1- this method required the date, it is called _datetime in calendar class
