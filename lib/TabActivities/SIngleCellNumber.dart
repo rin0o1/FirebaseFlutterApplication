@@ -114,7 +114,7 @@ class CellNumberState extends State<CellNumber>
       alignment: Alignment.bottomCenter,
       child: Container(
         width: 37.0, // Should probably calculate these values
-        height: 53.0,
+        height: 50.0,
         decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: (this.IsTheDay) ? Colors.yellowAccent : null),
