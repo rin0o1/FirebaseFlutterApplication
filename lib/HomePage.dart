@@ -28,10 +28,10 @@ class HomePageState extends State<HomePage> {
             bottom: TabBar(
               tabs: <Widget>[
                 Tab(
-                  text: "Attività",
+                  text: "Statistiche",
                 ),
                 Tab(
-                  text: "Statistiche",
+                  text: "Attività",
                 )
               ],
             ),
